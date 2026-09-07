@@ -19,6 +19,19 @@ describe("Demo dashboard", () => {
     expect(screen.getByText(topTitle.name)).toBeInTheDocument();
   });
 
+  it("actually mounts the chart's svg", () => {
+    const { container } = render(
+      <DemoDataProvider>
+        <DemoPage />
+      </DemoDataProvider>
+    );
+
+    // recharts' ResponsiveContainer only renders once it has measured a size,
+    // which needs the ResizeObserver stub from vitest.setup.ts plus a
+    // non-zero clientWidth/Height (jsdom reports 0 for everything).
+    expect(container.querySelector("svg.recharts-surface")).not.toBeNull();
+  });
+
   it("gives the page an h1 and each section an h2", () => {
     render(
       <DemoDataProvider>

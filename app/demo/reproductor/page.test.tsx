@@ -7,22 +7,19 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
-// jsdom does not implement ResizeObserver. @kivora/nextjs's Player observes
-// its root element unconditionally to detect a "small" (mobile) layout —
-// without a stub the mount effect throws ReferenceError and the test fails
-// before any assertion runs (same pre-existing jsdom gap noted for Task 5's
-// recharts ResponsiveContainer, but here it's fatal rather than silent).
-class ResizeObserverStub {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
-vi.stubGlobal("ResizeObserver", ResizeObserverStub);
+// El stub de ResizeObserver que necesita el Player vive ahora en
+// vitest.setup.ts, compartido con el gráfico del Dashboard.
 
-// jsdom also has no real media pipeline: it logs "Not implemented" console
-// errors whenever the rendered <video>'s load()/pause() are invoked. Stub
-// them to no-ops so the test's console output stays pristine; this has no
-// bearing on the assertion below, which only checks the selected <option>.
+// jsdom has no real media pipeline: it logs "Not implemented" console errors
+// whenever the rendered <video>'s load()/pause() are invoked. Stub them to
+// no-ops so the test's console output stays pristine.
+//
+// Asignación directa a propósito, no vi.spyOn(...).mockImplementation(): con
+// el spy, ejecutar este fichero junto a otro vuelve a imprimir "Not
+// implemented: HTMLMediaElement's load() method" (vitest restaura el espía
+// alrededor del desmontaje), que es justo lo que se quería evitar. Y no hay
+// nada que aislar: vitest corre cada fichero de test en su propio entorno
+// jsdom (isolate: true por defecto), así que este prototipo no se comparte.
 HTMLMediaElement.prototype.load = () => {};
 HTMLMediaElement.prototype.pause = () => {};
 
