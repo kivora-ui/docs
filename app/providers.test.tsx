@@ -7,14 +7,13 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ refresh }),
 }));
 
-const setLocaleCookie = vi.fn(async () => undefined);
-const setColorModeCookie = vi.fn(async () => undefined);
 vi.mock("@/lib/preferences-actions", () => ({
-  setLocaleCookie: (...args: unknown[]) => setLocaleCookie(...args),
-  setColorModeCookie: (...args: unknown[]) => setColorModeCookie(...args),
+  setLocaleCookie: vi.fn(async () => undefined),
+  setColorModeCookie: vi.fn(async () => undefined),
 }));
 
 import { es } from "@/lib/i18n";
+import { setColorModeCookie, setLocaleCookie } from "@/lib/preferences-actions";
 import { Providers, usePreferences } from "./providers";
 
 function Consumer() {

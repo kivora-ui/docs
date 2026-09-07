@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
+import { resolveInitialPreferences } from "@/lib/preferences";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -18,15 +20,20 @@ export const metadata: Metadata = {
   description: "Componentes multiplataforma para Web y React Native.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const cookieStore = await cookies();
+  const { locale, colorMode } = resolveInitialPreferences(cookieStore);
+
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <Providers>{children}</Providers>
+        <Providers locale={locale} colorMode={colorMode}>
+          {children}
+        </Providers>
       </body>
     </html>
   );
