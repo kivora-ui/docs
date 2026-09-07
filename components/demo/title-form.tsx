@@ -2,10 +2,15 @@
 
 import * as React from "react";
 import { Button, Field, FieldLabel, Input } from "@kivora/nextjs";
+import { GENRES, MAX_POSTER_BYTES, TYPES } from "@/lib/demo/constants";
 import type { Title, TitleGenre, TitleType } from "@/lib/demo/types";
 
 export interface TitleFormProps {
   onSubmit: (title: Title) => void;
+}
+
+function formatKilobytes(bytes: number): string {
+  return `${Math.round(bytes / 1024)} KB`;
 }
 
 function readAsDataUrl(file: File): Promise<string> {
@@ -22,6 +27,7 @@ export function TitleForm({ onSubmit }: TitleFormProps) {
   const [genre, setGenre] = React.useState<TitleGenre>("Drama");
   const [type, setType] = React.useState<TitleType>("Película");
   const [posterUrl, setPosterUrl] = React.useState<string | undefined>(undefined);
+  const [posterError, setPosterError] = React.useState<string | null>(null);
 
   return (
     <form
@@ -39,6 +45,7 @@ export function TitleForm({ onSubmit }: TitleFormProps) {
         });
         setName("");
         setPosterUrl(undefined);
+        setPosterError(null);
       }}
       className="flex flex-col gap-4"
     >
@@ -59,11 +66,11 @@ export function TitleForm({ onSubmit }: TitleFormProps) {
           onChange={(event) => setGenre(event.target.value as TitleGenre)}
           className="h-10 rounded-md border border-input bg-background px-3 text-sm"
         >
-          <option value="Acción">Acción</option>
-          <option value="Drama">Drama</option>
-          <option value="Documental">Documental</option>
-          <option value="Ciencia ficción">Ciencia ficción</option>
-          <option value="Animación">Animación</option>
+          {GENRES.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
       </Field>
       <Field>
@@ -74,8 +81,11 @@ export function TitleForm({ onSubmit }: TitleFormProps) {
           onChange={(event) => setType(event.target.value as TitleType)}
           className="h-10 rounded-md border border-input bg-background px-3 text-sm"
         >
-          <option value="Película">Película</option>
-          <option value="Serie">Serie</option>
+          {TYPES.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
       </Field>
       <Field>
@@ -84,12 +94,31 @@ export function TitleForm({ onSubmit }: TitleFormProps) {
           id="title-poster"
           type="file"
           accept="image/*"
+          aria-describedby={posterError ? "title-poster-error" : undefined}
+          aria-invalid={posterError ? true : undefined}
           onChange={async (event) => {
             const file = event.target.files?.[0];
-            if (file) setPosterUrl(await readAsDataUrl(file));
+            if (!file) return;
+            // El póster acaba como data URL dentro del store de localStorage:
+            // una imagen de varios MB reventaría la cuota y el setItem del
+            // provider fallaría en silencio, perdiendo los datos al recargar.
+            if (file.size > MAX_POSTER_BYTES) {
+              setPosterUrl(undefined);
+              setPosterError(
+                `El póster no puede superar ${formatKilobytes(MAX_POSTER_BYTES)}. Elige una imagen más pequeña.`
+              );
+              return;
+            }
+            setPosterError(null);
+            setPosterUrl(await readAsDataUrl(file));
           }}
           className="text-sm"
         />
+        {posterError ? (
+          <p id="title-poster-error" role="alert" className="text-sm text-destructive">
+            {posterError}
+          </p>
+        ) : null}
       </Field>
       <Button type="submit">Guardar</Button>
     </form>
