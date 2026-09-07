@@ -30,6 +30,8 @@ Durante la preparación del spec aparecieron dos restricciones técnicas reales 
 
 El resto del diseño aprobado (rutas reales, `DemoDataProvider` con `localStorage`, contenido real de vídeo público) se mantiene sin cambios.
 
+**Nota tras la implementación:** la paleta oscura fija (clases Tailwind propias en vez de tokens semánticos) vive en dos ficheros, no en uno: el cromado del shell (`components/demo/demo-shell.tsx`, extraído de `app/demo/layout.tsx` al hacerlo responsive) y los enlaces del sidebar (`components/demo/demo-nav-link.tsx`). Mismo criterio y mismo alcance en ambos.
+
 ## Arquitectura
 
 ### Reestructuración de rutas (afecta al sub-proyecto 1 ya construido)
@@ -70,6 +72,7 @@ Los paréntesis de `(marketing)` no cambian ninguna URL: `/`, `/docs` y `/compon
 - **`/demo` (Dashboard):** stats derivadas (suscriptores activos, MRR simulado a partir del precio de los planes activos, visualizaciones últimos 30 días sumando `viewsLast30Days` de los títulos), un `Chart` de altas de los últimos 6 meses (serie fija) y una tabla de los 5 títulos más vistos.
 - **`/demo/catalogo`:** `DataTable` de títulos con búsqueda y filtro por género/tipo; botón "Añadir título" abre un formulario con `FileUpload` (simple) para el póster.
 - **`/demo/suscriptores`:** `DataTable` de suscriptores (plan, estado, fecha de alta); alta/edición con un formulario simple.
+  - **Nota tras la implementación:** en esta iteración solo se implementó el **alta**. Editar registros existentes no está soportado: `DemoDataProvider` expone `addTitle`/`addSubscriber` pero no los `updateTitle`/`updateSubscriber` que enumera la sección "Datos de demostración" más arriba. El mismo matiz aplica al `/demo/catalogo`.
 - **`/demo/reproductor`:** selector de título (solo los que tienen `playerSource`) + `Player` real de `@kivora/nextjs` reproduciendo la fuente elegida; acepta `?title=<id>` para preseleccionar (usado por los enlaces del catálogo), con el primer título reproducible como valor por defecto si no hay parámetro o no es válido.
 
 ## Testing
