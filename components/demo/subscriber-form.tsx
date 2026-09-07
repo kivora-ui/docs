@@ -2,9 +2,8 @@
 
 import * as React from "react";
 import { Button, Field, FieldLabel, Input } from "@kivora/nextjs";
+import { PLANS, PRICE_CENTS_BY_PLAN } from "@/lib/demo/constants";
 import type { Plan, Subscriber } from "@/lib/demo/types";
-
-const PRICE_CENTS_BY_PLAN: Record<Plan, number> = { "Básico": 599, "Estándar": 999, "Premium": 1499 };
 
 export interface SubscriberFormProps {
   onSubmit: (subscriber: Subscriber) => void;
@@ -55,9 +54,11 @@ export function SubscriberForm({ onSubmit }: SubscriberFormProps) {
           onChange={(event) => setPlan(event.target.value as Plan)}
           className="h-10 rounded-md border border-input bg-background px-3 text-sm"
         >
-          <option value="Básico">Básico</option>
-          <option value="Estándar">Estándar</option>
-          <option value="Premium">Premium</option>
+          {PLANS.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
         </select>
       </Field>
       <Button type="submit">Guardar</Button>

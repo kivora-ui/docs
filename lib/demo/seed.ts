@@ -1,4 +1,5 @@
-import type { Plan, Subscriber, SubscriberStatus, Title } from "./types";
+import { PLANS, PRICE_CENTS_BY_PLAN } from "./constants";
+import type { Subscriber, SubscriberStatus, Title } from "./types";
 
 // Fuentes de vídeo público reales, reutilizadas de
 // module/example/web/src/components/player-demo-sources.ts (catálogo de
@@ -173,9 +174,11 @@ const FIRST_NAMES = [
   "Vera", "Bruno", "Clara", "Adrián", "Nerea", "Rubén", "Alba", "Tomás", "Julia", "Óscar",
 ];
 const LAST_NAMES = ["Ruiz", "Molina", "Cano", "Reyes", "Ortega", "Vidal", "Campos", "Serra", "Bravo", "Nieto"];
-const PLANS: Plan[] = ["Básico", "Estándar", "Premium"];
+// Reparto ponderado a propósito ("active" repetido) para que la semilla salga
+// con mayoría de suscriptores activos. Es una preocupación distinta de la
+// lista de valores para la UI (`SUBSCRIBER_STATUSES` en `constants.ts`), así
+// que se queda privado aquí.
 const STATUSES: SubscriberStatus[] = ["active", "active", "active", "paused", "cancelled"];
-const PRICE_CENTS_BY_PLAN: Record<Plan, number> = { "Básico": 599, "Estándar": 999, "Premium": 1499 };
 
 export const subscriberSeed: Subscriber[] = FIRST_NAMES.map((firstName, index) => {
   const lastName = LAST_NAMES[index % LAST_NAMES.length];

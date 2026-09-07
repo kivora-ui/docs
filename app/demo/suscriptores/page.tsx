@@ -4,15 +4,8 @@ import * as React from "react";
 import { Button, DataTable, Dialog, DialogContent, DialogTitle, type DataTableColumnDef } from "@kivora/nextjs";
 import { useDemoData } from "@/components/demo/data-provider";
 import { SubscriberForm } from "@/components/demo/subscriber-form";
-import type { Plan, Subscriber } from "@/lib/demo/types";
-
-const STATUS_LABEL: Record<Subscriber["status"], string> = {
-  active: "Activo",
-  paused: "Pausado",
-  cancelled: "Cancelado",
-};
-const PLANS: Plan[] = ["Básico", "Estándar", "Premium"];
-const STATUSES: Subscriber["status"][] = ["active", "paused", "cancelled"];
+import { PLANS, STATUS_LABEL, SUBSCRIBER_STATUSES } from "@/lib/demo/constants";
+import type { Subscriber } from "@/lib/demo/types";
 
 export default function SuscriptoresPage() {
   const { subscribers, addSubscriber } = useDemoData();
@@ -53,7 +46,7 @@ export default function SuscriptoresPage() {
             columnId: "status",
             label: "Estado",
             type: "select",
-            options: STATUSES.map((value) => ({ label: STATUS_LABEL[value], value })),
+            options: SUBSCRIBER_STATUSES.map((value) => ({ label: STATUS_LABEL[value], value })),
           },
         ]}
       />

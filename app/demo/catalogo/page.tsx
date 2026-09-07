@@ -4,10 +4,8 @@ import * as React from "react";
 import { Button, DataTable, Dialog, DialogContent, DialogTitle, type DataTableColumnDef } from "@kivora/nextjs";
 import { useDemoData } from "@/components/demo/data-provider";
 import { TitleForm } from "@/components/demo/title-form";
-import type { Title, TitleGenre, TitleType } from "@/lib/demo/types";
-
-const GENRES: TitleGenre[] = ["Acción", "Drama", "Documental", "Ciencia ficción", "Animación"];
-const TYPES: TitleType[] = ["Película", "Serie"];
+import { GENRES, TYPES } from "@/lib/demo/constants";
+import type { Title } from "@/lib/demo/types";
 
 export default function CatalogoPage() {
   const { titles, addTitle } = useDemoData();
