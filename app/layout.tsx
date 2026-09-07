@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import { resolveInitialPreferences } from "@/lib/preferences";
-import { Footer } from "@/components/shell/footer";
-import { Header } from "@/components/shell/header";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -34,9 +32,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <Providers locale={locale} colorMode={colorMode}>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          {children}
         </Providers>
       </body>
     </html>
