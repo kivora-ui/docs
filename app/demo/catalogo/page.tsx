@@ -77,39 +77,42 @@ export default function CatalogoPage() {
         <h1 className="text-xl font-bold text-foreground">Catálogo</h1>
         <Button onClick={() => setOpen(true)}>Añadir título</Button>
       </div>
-      <DataTable
-        data={titles}
-        columns={columns}
-        searchable
-        paginated
-        pageSize={8}
-        renderRowActions={(title) =>
-          title.playerSource ? (
-            <Link
-              href={`/demo/reproductor?title=${title.id}`}
-              aria-label={`Reproducir ${title.name}`}
-              title={`Reproducir ${title.name}`}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-            >
-              <PlaySquare aria-hidden className="h-4 w-4" />
-            </Link>
-          ) : null
-        }
-        filters={[
-          {
-            columnId: "type",
-            label: "Tipo",
-            type: "select",
-            options: TYPES.map((value) => ({ label: value, value })),
-          },
-          {
-            columnId: "genre",
-            label: "Género",
-            type: "select",
-            options: GENRES.map((value) => ({ label: value, value })),
-          },
-        ]}
-      />
+      {/* Contenedor de scroll: la tabla no cabe en un viewport estrecho. */}
+      <div className="overflow-x-auto">
+        <DataTable
+          data={titles}
+          columns={columns}
+          searchable
+          paginated
+          pageSize={8}
+          renderRowActions={(title) =>
+            title.playerSource ? (
+              <Link
+                href={`/demo/reproductor?title=${title.id}`}
+                aria-label={`Reproducir ${title.name}`}
+                title={`Reproducir ${title.name}`}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              >
+                <PlaySquare aria-hidden className="h-4 w-4" />
+              </Link>
+            ) : null
+          }
+          filters={[
+            {
+              columnId: "type",
+              label: "Tipo",
+              type: "select",
+              options: TYPES.map((value) => ({ label: value, value })),
+            },
+            {
+              columnId: "genre",
+              label: "Género",
+              type: "select",
+              options: GENRES.map((value) => ({ label: value, value })),
+            },
+          ]}
+        />
+      </div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogTitle>Añadir título</DialogTitle>
