@@ -44,6 +44,7 @@ export function DemoDataProvider({ children }: { children: React.ReactNode }) {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed: unknown = JSON.parse(raw);
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- hidratar desde localStorage al montar es el patrón correcto aquí: leer en el inicializador de useState rompería el render de servidor
         if (isDemoStore(parsed)) setStore(parsed);
       }
     } catch {
