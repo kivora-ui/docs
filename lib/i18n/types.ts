@@ -53,7 +53,6 @@ export interface Dictionary {
   placeholder: {
     docsTitle: string;
     componentsTitle: string;
-    demoTitle: string;
     comingSoon: string;
   };
 }

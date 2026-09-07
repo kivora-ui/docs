@@ -3,7 +3,7 @@
 import { usePreferences } from "@/app/providers";
 
 export interface PlaceholderPageProps {
-  titleKey: "docsTitle" | "componentsTitle" | "demoTitle";
+  titleKey: "docsTitle" | "componentsTitle";
 }
 
 export function PlaceholderPage({ titleKey }: PlaceholderPageProps) {

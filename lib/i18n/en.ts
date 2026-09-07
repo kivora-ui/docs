@@ -69,7 +69,6 @@ export const en: Dictionary = {
   placeholder: {
     docsTitle: "Documentation",
     componentsTitle: "Components",
-    demoTitle: "OTT ERP demo",
     comingSoon: "This section is coming soon.",
   },
 };
