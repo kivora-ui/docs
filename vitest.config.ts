@@ -7,6 +7,8 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
+    // tests/e2e uses @playwright/test's own test runner, not Vitest's.
+    exclude: ["**/node_modules/**", "tests/e2e/**"],
     server: {
       // Vitest externalizes node_modules by default (loaded via Node's own
       // resolver, bypassing Vite). @kivora/nextjs needs to go through Vite's
