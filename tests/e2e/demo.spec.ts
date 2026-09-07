@@ -32,6 +32,34 @@ test("se puede añadir un título nuevo desde el catálogo", async ({ page }) =>
   await expect(page.getByText("Título e2e")).toBeVisible();
 });
 
+test("una fila del catálogo enlaza al reproductor con el título preseleccionado", async ({
+  page,
+}) => {
+  await page.goto("/demo/catalogo");
+
+  await page.getByRole("link", { name: "Reproducir Sintel" }).click();
+
+  await expect(page).toHaveURL(/\/demo\/reproductor\?title=sintel$/);
+  await expect(page.getByRole("combobox", { name: "Título" })).toHaveValue("sintel");
+});
+
+test("en un viewport estrecho el sidebar se abre desde el botón de menú", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto("/demo");
+
+  const catalogLink = page.getByRole("navigation", { name: "Nébula" }).getByRole("link", {
+    name: "Catálogo",
+  });
+  await expect(catalogLink).toBeHidden();
+
+  await page.getByRole("button", { name: "Abrir el menú" }).click();
+  await expect(catalogLink).toBeVisible();
+
+  await catalogLink.click();
+  await expect(page).toHaveURL(/\/demo\/catalogo$/);
+  await expect(catalogLink).toBeHidden();
+});
+
 test("el reproductor carga y reproduce contenido real", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("console", (message) => {

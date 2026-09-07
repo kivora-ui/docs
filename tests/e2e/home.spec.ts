@@ -18,6 +18,16 @@ test("la home carga y el nav no da 404", async ({ page }) => {
   expect(consoleErrors).toEqual([]);
 });
 
+test("una URL inexistente devuelve un 404 con el cromado de marketing", async ({ page }) => {
+  const response = await page.goto("/no-existe-esta-pagina");
+  expect(response?.status()).toBe(404);
+
+  await expect(page.getByRole("heading", { level: 1, name: "Página no encontrada" })).toBeVisible();
+  await expect(page.getByRole("banner")).toBeVisible();
+  await expect(page.getByRole("contentinfo")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Volver al inicio" })).toBeVisible();
+});
+
 test("el selector de tema aplica la clase dark al elemento html", async ({ page }) => {
   await page.goto("/");
   const html = page.locator("html");
