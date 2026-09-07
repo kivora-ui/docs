@@ -7,17 +7,27 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
+    server: {
+      // Vitest externalizes node_modules by default (loaded via Node's own
+      // resolver, bypassing Vite). @kivora/nextjs needs to go through Vite's
+      // pipeline instead so the react-syntax-highlighter alias above (and
+      // any future one) actually applies.
+      deps: {
+        inline: ["@kivora/nextjs"],
+      },
+    },
   },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./"),
+      // @kivora/nextjs bundles every component into a single dist/index.js,
+      // so importing anything from it (e.g. ThemeToggle) evaluates the whole
+      // module graph, including Code's dependency on this react-syntax-
+      // highlighter subpath. That subpath is a directory import without an
+      // explicit /index.js, which Vite's strict ESM resolver rejects (Next's
+      // Turbopack resolves it fine, so the app itself is unaffected).
+      "react-syntax-highlighter/dist/esm/styles/hljs":
+        "react-syntax-highlighter/dist/esm/styles/hljs/index.js",
     },
-    // TEMPORARY: @kivora/nextjs is a `file:` symlink into the sibling
-    // `module` repo (see next.config.ts) while its npm build is being fixed.
-    // Vite resolves modules by real path, so without deduping, the symlinked
-    // package's own "react" import resolves to module's separate copy of
-    // React instead of this project's — two React instances, broken hooks.
-    // Safe to remove once we're back on the published npm package.
-    dedupe: ["react", "react-dom"],
   },
 });

@@ -12,8 +12,10 @@
     "test:e2e": "next build && playwright test"
   },
   "dependencies": {
-    "@kivora/nextjs": "file:../module/packages/nextjs",
-    "@kivora/theme": "file:../module/packages/theme",
+    "@kivora/codes": "file:../module/packages/codes/dist/kivora-codes-0.0.0.tgz",
+    "@kivora/nextjs": "file:../module/packages/nextjs/dist/kivora-nextjs-0.0.0.tgz",
+    "@kivora/theme": "file:../module/packages/theme/dist/kivora-theme-0.0.0.tgz",
+    "@kivora/upload": "file:../module/packages/upload/dist/kivora-upload-0.0.0.tgz",
     "lucide-react": "^1.41.0",
     "next": "16.3.4",
     "react": "19.2.8",
