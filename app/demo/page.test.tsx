@@ -18,4 +18,19 @@ describe("Demo dashboard", () => {
     const topTitle = [...titleSeed].sort((a, b) => b.viewsLast30Days - a.viewsLast30Days)[0];
     expect(screen.getByText(topTitle.name)).toBeInTheDocument();
   });
+
+  it("gives the page an h1 and each section an h2", () => {
+    render(
+      <DemoDataProvider>
+        <DemoPage />
+      </DemoDataProvider>
+    );
+
+    expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual([
+      "Indicadores",
+      "Altas de suscriptores (últimos 6 meses)",
+      "Contenido más visto",
+    ]);
+  });
 });

@@ -17,12 +17,18 @@ function ReproductorView() {
   const selected = playableTitles.find((t) => t.id === selectedId);
 
   if (!selected?.playerSource) {
-    return <p className="text-muted-foreground">No hay contenido reproducible en el catálogo.</p>;
+    return (
+      <div className="flex flex-col gap-4">
+        <h1 className="text-xl font-bold text-foreground">Reproductor</h1>
+        <p className="text-muted-foreground">No hay contenido reproducible en el catálogo.</p>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-3">
+      <h1 className="text-xl font-bold text-foreground">Reproductor</h1>
+      <div className="flex flex-wrap items-center gap-3">
         <label htmlFor="reproductor-select" className="text-sm font-medium text-foreground">
           Título
         </label>

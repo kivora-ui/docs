@@ -39,4 +39,14 @@ describe("Reproductor", () => {
     const firstPlayable = titleSeed.find((t) => t.playerSource);
     expect(screen.getByRole("option", { name: firstPlayable!.name, selected: true })).toBeInTheDocument();
   });
+
+  it("gives the page an h1", () => {
+    render(
+      <DemoDataProvider>
+        <ReproductorPage />
+      </DemoDataProvider>
+    );
+
+    expect(screen.getByRole("heading", { level: 1, name: "Reproductor" })).toBeInTheDocument();
+  });
 });

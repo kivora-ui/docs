@@ -19,23 +19,32 @@ export default function DemoPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-border p-6">
-          <p className="text-sm text-muted-foreground">Suscriptores activos</p>
-          <p className="mt-2 text-3xl font-bold text-foreground">{activeSubscribers.length}</p>
-        </div>
-        <div className="rounded-lg border border-border p-6">
-          <p className="text-sm text-muted-foreground">Ingresos mensuales (MRR)</p>
-          <p className="mt-2 text-3xl font-bold text-foreground">{formatCents(mrrCents)}</p>
-        </div>
-        <div className="rounded-lg border border-border p-6">
-          <p className="text-sm text-muted-foreground">Visualizaciones (30 días)</p>
-          <p className="mt-2 text-3xl font-bold text-foreground">{totalViews.toLocaleString("es-ES")}</p>
-        </div>
-      </div>
+      <h1 className="text-xl font-bold text-foreground">Dashboard</h1>
 
-      <div className="rounded-lg border border-border p-6">
-        <p className="mb-4 text-sm font-semibold text-foreground">Altas de suscriptores (últimos 6 meses)</p>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-sm font-semibold text-foreground">Indicadores</h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="rounded-lg border border-border p-6">
+            <p className="text-sm text-muted-foreground">Suscriptores activos</p>
+            <p className="mt-2 text-3xl font-bold text-foreground">{activeSubscribers.length}</p>
+          </div>
+          <div className="rounded-lg border border-border p-6">
+            <p className="text-sm text-muted-foreground">Ingresos mensuales (MRR)</p>
+            <p className="mt-2 text-3xl font-bold text-foreground">{formatCents(mrrCents)}</p>
+          </div>
+          <div className="rounded-lg border border-border p-6">
+            <p className="text-sm text-muted-foreground">Visualizaciones (30 días)</p>
+            <p className="mt-2 text-3xl font-bold text-foreground">
+              {totalViews.toLocaleString("es-ES")}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-border p-6">
+        <h2 className="mb-4 text-sm font-semibold text-foreground">
+          Altas de suscriptores (últimos 6 meses)
+        </h2>
         <ChartContainer
           config={{ signups: { label: "Altas", color: "var(--color-primary)" } }}
           className="h-64 w-full"
@@ -48,10 +57,10 @@ export default function DemoPage() {
             <Bar dataKey="signups" name="Altas" fill="var(--color-primary)" radius={4} />
           </BarChart>
         </ChartContainer>
-      </div>
+      </section>
 
-      <div className="rounded-lg border border-border p-6">
-        <p className="mb-4 text-sm font-semibold text-foreground">Contenido más visto</p>
+      <section className="rounded-lg border border-border p-6">
+        <h2 className="mb-4 text-sm font-semibold text-foreground">Contenido más visto</h2>
         <ol className="flex flex-col gap-2">
           {topTitles.map((title) => (
             <li key={title.id} className="flex items-center justify-between text-sm">
@@ -60,7 +69,7 @@ export default function DemoPage() {
             </li>
           ))}
         </ol>
-      </div>
+      </section>
     </div>
   );
 }
