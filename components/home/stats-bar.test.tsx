@@ -25,4 +25,9 @@ describe("StatsBar", () => {
     expect(screen.getByText(en.stats.platformsLabel)).toBeInTheDocument();
     expect(screen.getByText(en.stats.themesLabel)).toBeInTheDocument();
   });
+
+  it("shows a decorative icon on every stat", () => {
+    const { container } = render(<StatsBar />);
+    expect(container.querySelectorAll("svg")).toHaveLength(3);
+  });
 });

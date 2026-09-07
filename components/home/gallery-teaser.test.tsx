@@ -25,4 +25,16 @@ describe("GalleryTeaser", () => {
     }
     expect(screen.getByRole("link", { name: en.gallery.ctaLabel })).toBeInTheDocument();
   });
+
+  it("shows a decorative icon on every component card", () => {
+    render(<GalleryTeaser />);
+
+    const ctaLink = screen.getByRole("link", { name: en.gallery.ctaLabel });
+    const cardLinks = screen.getAllByRole("link").filter((link) => link !== ctaLink);
+
+    expect(cardLinks).toHaveLength(10);
+    for (const link of cardLinks) {
+      expect(link.querySelector("svg")).not.toBeNull();
+    }
+  });
 });

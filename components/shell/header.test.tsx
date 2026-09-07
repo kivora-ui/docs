@@ -26,4 +26,15 @@ describe("Header", () => {
     expect(screen.getByRole("link", { name: "Components" })).toHaveAttribute("href", "/componentes");
     expect(screen.getByRole("link", { name: "Demo" })).toHaveAttribute("href", "/demo");
   });
+
+  it("shows a decorative icon next to the Kivora wordmark", () => {
+    render(
+      <Providers locale="en" colorMode="system">
+        <Header />
+      </Providers>
+    );
+
+    const logo = screen.getByRole("link", { name: "Kivora" });
+    expect(logo.querySelector("svg")).not.toBeNull();
+  });
 });

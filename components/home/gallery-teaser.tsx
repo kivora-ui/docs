@@ -1,19 +1,32 @@
 "use client";
 
+import {
+  Calendar,
+  CalendarClock,
+  CirclePlay,
+  CloudUpload,
+  CreditCard,
+  GalleryHorizontal,
+  ListCollapse,
+  MessageSquare,
+  MousePointerClick,
+  Table2,
+  type LucideIcon,
+} from "lucide-react";
 import { usePreferences } from "@/app/providers";
 
-const COMPONENT_NAMES = [
-  "Button",
-  "Card",
-  "Table",
-  "Calendar",
-  "DatePicker",
-  "Carousel",
-  "Player",
-  "FileUpload",
-  "Dialog",
-  "Accordion",
-] as const;
+const COMPONENTS: { name: string; icon: LucideIcon }[] = [
+  { name: "Button", icon: MousePointerClick },
+  { name: "Card", icon: CreditCard },
+  { name: "Table", icon: Table2 },
+  { name: "Calendar", icon: Calendar },
+  { name: "DatePicker", icon: CalendarClock },
+  { name: "Carousel", icon: GalleryHorizontal },
+  { name: "Player", icon: CirclePlay },
+  { name: "FileUpload", icon: CloudUpload },
+  { name: "Dialog", icon: MessageSquare },
+  { name: "Accordion", icon: ListCollapse },
+];
 
 export function GalleryTeaser() {
   const { dictionary } = usePreferences();
@@ -23,12 +36,13 @@ export function GalleryTeaser() {
       <h2 className="text-2xl font-bold text-foreground">{dictionary.gallery.heading}</h2>
       <p className="mt-2 text-muted-foreground">{dictionary.gallery.description}</p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        {COMPONENT_NAMES.map((name) => (
+        {COMPONENTS.map(({ name, icon: Icon }) => (
           <a
             key={name}
             href="/componentes"
-            className="rounded-lg border border-border p-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary"
+            className="flex flex-col items-center gap-2 rounded-lg border border-border p-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary"
           >
+            <Icon aria-hidden className="h-5 w-5 text-primary" />
             {name}
           </a>
         ))}

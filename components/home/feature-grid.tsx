@@ -1,16 +1,17 @@
 "use client";
 
+import { CirclePlay, CloudUpload, Palette, SquarePen, Table2 } from "lucide-react";
 import { usePreferences } from "@/app/providers";
 
 export function FeatureGrid() {
   const { dictionary } = usePreferences();
 
   const features = [
-    dictionary.features.forms,
-    dictionary.features.tables,
-    dictionary.features.player,
-    dictionary.features.uploads,
-    dictionary.features.theming,
+    { icon: SquarePen, ...dictionary.features.forms },
+    { icon: Table2, ...dictionary.features.tables },
+    { icon: CirclePlay, ...dictionary.features.player },
+    { icon: CloudUpload, ...dictionary.features.uploads },
+    { icon: Palette, ...dictionary.features.theming },
   ];
 
   return (
@@ -19,7 +20,8 @@ export function FeatureGrid() {
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => (
           <div key={feature.title} className="rounded-lg border border-border p-6">
-            <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+            <feature.icon aria-hidden className="h-6 w-6 text-primary" />
+            <h3 className="mt-3 text-lg font-semibold text-foreground">{feature.title}</h3>
             <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
           </div>
         ))}

@@ -1,5 +1,6 @@
 "use client";
 
+import { Package } from "lucide-react";
 import { usePreferences } from "@/app/providers";
 
 const PACKAGES = [
@@ -23,8 +24,9 @@ export function Footer() {
                 href={pkg.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground"
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
               >
+                <Package aria-hidden className="h-4 w-4" />
                 {pkg.name}
               </a>
             </li>

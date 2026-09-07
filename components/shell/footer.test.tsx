@@ -38,4 +38,17 @@ describe("Footer", () => {
       "https://www.npmjs.com/package/@kivora/init"
     );
   });
+
+  it("shows a decorative icon next to every package link", () => {
+    render(
+      <Providers locale="en" colorMode="system">
+        <Footer />
+      </Providers>
+    );
+
+    for (const name of ["@kivora/nextjs", "@kivora/native", "@kivora/theme", "@kivora/init"]) {
+      const link = screen.getByRole("link", { name });
+      expect(link.querySelector("svg")).not.toBeNull();
+    }
+  });
 });

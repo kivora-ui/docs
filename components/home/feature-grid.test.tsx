@@ -24,4 +24,14 @@ describe("FeatureGrid", () => {
     expect(screen.getByText(en.features.uploads.title)).toBeInTheDocument();
     expect(screen.getByText(en.features.theming.title)).toBeInTheDocument();
   });
+
+  it("shows a decorative icon on every feature card", () => {
+    render(<FeatureGrid />);
+
+    const titles = screen.getAllByRole("heading", { level: 3 });
+    expect(titles).toHaveLength(5);
+    for (const title of titles) {
+      expect(title.parentElement?.querySelector("svg")).not.toBeNull();
+    }
+  });
 });
