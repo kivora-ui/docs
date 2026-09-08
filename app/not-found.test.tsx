@@ -1,3 +1,4 @@
+// app/not-found.test.tsx
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { en } from "@/lib/i18n";
@@ -5,7 +6,7 @@ import { en } from "@/lib/i18n";
 // Header/Footer are client components that read the preferences context,
 // which normally comes from the root layout's <Providers>. The 404 page
 // itself is a server component, so only its children need the stub.
-vi.mock("@/app/providers", () => ({
+vi.mock("@/providers/app-providers", () => ({
   usePreferences: () => ({
     locale: "en",
     dictionary: en,
