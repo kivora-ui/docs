@@ -22,10 +22,10 @@ test("una URL inexistente devuelve un 404 con el cromado de marketing", async ({
   const response = await page.goto("/no-existe-esta-pagina");
   expect(response?.status()).toBe(404);
 
-  await expect(page.getByRole("heading", { level: 1, name: "Página no encontrada" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Page not found" })).toBeVisible();
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Volver al inicio" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Back to home" })).toBeVisible();
 });
 
 test("el selector de tema aplica la clase dark al elemento html", async ({ page }) => {

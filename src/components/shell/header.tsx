@@ -17,7 +17,7 @@ export function Header() {
           <Blocks aria-hidden className="h-5 w-5 text-primary" />
           Kivora
         </Link>
-        <nav className="flex items-center gap-6">
+        <nav className="hidden items-center gap-6 sm:flex">
           <NavLink href="/">{dictionary.nav.home}</NavLink>
           <NavLink href="/docs">{dictionary.nav.docs}</NavLink>
           <NavLink href="/componentes">{dictionary.nav.components}</NavLink>

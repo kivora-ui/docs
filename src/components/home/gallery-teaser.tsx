@@ -13,6 +13,7 @@ import {
   Table2,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { usePreferences } from "@/providers/app-providers";
 
 const COMPONENTS: { name: string; icon: LucideIcon }[] = [
@@ -37,20 +38,20 @@ export function GalleryTeaser() {
       <p className="mt-2 text-muted-foreground">{dictionary.gallery.description}</p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {COMPONENTS.map(({ name, icon: Icon }) => (
-          <a
+          <Link
             key={name}
             href="/componentes"
             className="flex flex-col items-center gap-2 rounded-lg border border-border p-4 text-center text-sm font-medium text-foreground transition-colors hover:border-primary"
           >
             <Icon aria-hidden className="h-5 w-5 text-primary" />
             {name}
-          </a>
+          </Link>
         ))}
       </div>
       <div className="mt-8 text-center">
-        <a href="/componentes" className="text-sm font-semibold text-primary hover:underline">
+        <Link href="/componentes" className="text-sm font-semibold text-primary hover:underline">
           {dictionary.gallery.ctaLabel}
-        </a>
+        </Link>
       </div>
     </section>
   );

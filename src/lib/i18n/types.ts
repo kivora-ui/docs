@@ -56,4 +56,9 @@ export interface Dictionary {
     demoTitle: string;
     comingSoon: string;
   };
+  notFound: {
+    title: string;
+    description: string;
+    backToHome: string;
+  };
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Card, CardContent } from "@kivora/nextjs";
+import Link from "next/link";
 import { usePreferences } from "@/providers/app-providers";
 
 export function Hero() {
@@ -17,10 +18,10 @@ export function Hero() {
       <p className="max-w-2xl text-lg text-muted-foreground">{dictionary.hero.subtitle}</p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Button asChild size="lg">
-          <a href="/componentes">{dictionary.hero.ctaPrimary}</a>
+          <Link href="/componentes">{dictionary.hero.ctaPrimary}</Link>
         </Button>
         <Button asChild size="lg" variant="outline">
-          <a href="/docs">{dictionary.hero.ctaSecondary}</a>
+          <Link href="/docs">{dictionary.hero.ctaSecondary}</Link>
         </Button>
       </div>
       <Card className="mt-6 w-full max-w-sm text-left">

@@ -38,18 +38,24 @@ export function Providers({ children, locale: initialLocale, colorMode: initialC
 
   const setLocale = React.useCallback(
     (next: Locale) => {
+      const previous = locale;
       setLocaleState(next);
-      void setLocaleCookie(next).then(() => router.refresh());
+      void setLocaleCookie(next)
+        .then(() => router.refresh())
+        .catch(() => setLocaleState(previous));
     },
-    [router]
+    [router, locale]
   );
 
   const setColorMode = React.useCallback(
     (next: ColorMode) => {
+      const previous = colorMode;
       setColorModeState(next);
-      void setColorModeCookie(next).then(() => router.refresh());
+      void setColorModeCookie(next)
+        .then(() => router.refresh())
+        .catch(() => setColorModeState(previous));
     },
-    [router]
+    [router, colorMode]
   );
 
   const value = React.useMemo<PreferencesContextValue>(

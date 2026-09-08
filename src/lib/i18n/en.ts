@@ -72,4 +72,9 @@ export const en: Dictionary = {
     demoTitle: "Demo",
     comingSoon: "This section is coming soon.",
   },
+  notFound: {
+    title: "Page not found",
+    description: "The address you opened doesn't exist or is no longer available.",
+    backToHome: "Back to home",
+  },
 };

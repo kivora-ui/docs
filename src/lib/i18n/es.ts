@@ -72,4 +72,9 @@ export const es: Dictionary = {
     demoTitle: "Demo",
     comingSoon: "Esta sección estará disponible próximamente.",
   },
+  notFound: {
+    title: "Página no encontrada",
+    description: "La dirección que has abierto no existe o ya no está disponible.",
+    backToHome: "Volver al inicio",
+  },
 };
