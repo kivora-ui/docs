@@ -21,7 +21,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./"),
+      "@": path.resolve(__dirname, "./src"),
       // @kivora/nextjs bundles every component into a single dist/index.js,
       // so importing anything from it (e.g. ThemeToggle) evaluates the whole
       // module graph, including Code's dependency on this react-syntax-
