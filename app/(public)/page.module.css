@@ -1429,20 +1429,25 @@
   .teamPeople { overflow: visible; }
 }
 
-/* Shared right edge for the header and the example area. */
-.page { --content-gutter-right: 28px; }
+/* Match the intro’s left gutter to center the desktop content as a whole. */
+.page { --content-gutter-right: 5.8vw; }
 .header { padding-right: calc(var(--content-gutter-right) + 4px); }
 .showcase { padding-right: var(--content-gutter-right); }
-.headerActions > button { margin-right: -7px; }
+.headerActions { gap: 12px; }
+.headerActions > button:last-child { margin-right: -7px; }
 .headerActions .npmLink {
-  min-width: 32px;
-  min-height: 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   justify-content: center;
   color: var(--ink);
 }
 @media (max-width: 1100px) {
-  .page { --content-gutter-right: 18px; }
+  .page { --content-gutter-right: 4vw; }
 }
 @media (max-width: 600px), (max-height: 600px), (max-width: 360px) {
   .page { --content-gutter-right: 20px; }
 }
+
+.headerActions .npmLink:hover { background: var(--line); }
+.headerActions .npmLink svg { width: 25px; height: 11px; }
