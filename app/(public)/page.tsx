@@ -1,4 +1,5 @@
 "use client";
+import { useT, LanguagePicker } from "../_lib/i18n/provider";
 
 import Link from "next/link";
 import { useRef, useState, type ReactNode } from "react";
@@ -87,6 +88,7 @@ function Person({
   role: string;
   index: number;
 }) {
+  const t = useT();
   return (
     <div className={styles.person}>
       <Avatar className={styles.avatar}>
@@ -107,25 +109,26 @@ function Person({
         <strong>{name}</strong>
         <span>{role}</span>
       </div>
-      <span className={styles.online} role="img" aria-label="En línea" />
+      <span className={styles.online} role="img" aria-label={t("En línea")} />
     </div>
   );
 }
 
 function Workspace() {
+  const t = useT();
   const [frozen, setFrozen] = useState(false);
   return (
     <div className={styles.board}>
       <div className={styles.column}>
         <TeamCard />
         <Panel
-          title="A tu manera"
-          description="Un espacio que se adapta a tu ritmo."
+          title={t("A tu manera")}
+          description={t("Un espacio que se adapta a tu ritmo.")}
         >
           {[
-            "Notificaciones por email",
-            "Actividad de tu equipo",
-            "Novedades de producto",
+            t("Notificaciones por email"),
+            t("Actividad de tu equipo"),
+            t("Novedades de producto"),
           ].map((label, index) => (
             <div className={styles.setting} key={label}>
               <span>{label}</span>
@@ -136,14 +139,14 @@ function Workspace() {
       </div>
       <div className={styles.column}>
         <Panel
-          title="Tu próxima gran idea"
-          description="Empieza por un espacio para crear."
+          title={t("Tu próxima gran idea")}
+          description={t("Empieza por un espacio para crear.")}
         >
           <Signup />
         </Panel>
         <Panel
-          title="Todo bajo control"
-          description="Una tarjeta. Todas las posibilidades."
+          title={t("Todo bajo control")}
+          description={t("Una tarjeta. Todas las posibilidades.")}
         >
           <div className={styles.bankCard}>
             <span>
@@ -156,13 +159,15 @@ function Workspace() {
             </span>
           </div>
           <div className={styles.cardBottom}>
-            <span>{frozen ? "Tarjeta pausada" : "Tarjeta virtual activa"}</span>
+            <span>
+              {frozen ? t("Tarjeta pausada") : t("Tarjeta virtual activa")}
+            </span>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setFrozen(!frozen)}
             >
-              {frozen ? "Activar" : "Pausar"}
+              {frozen ? t("Activar") : t("Pausar")}
             </Button>
           </div>
         </Panel>
@@ -171,8 +176,8 @@ function Workspace() {
             <CheckCheck size={22} />
           </span>
           <div>
-            <strong>Todo listo para crear</strong>
-            <p>Tu siguiente proyecto empieza aquí.</p>
+            <strong>{t("Todo listo para crear")}</strong>
+            <p>{t("Tu siguiente proyecto empieza aquí.")}</p>
           </div>
         </Card>
       </div>
@@ -181,6 +186,7 @@ function Workspace() {
 }
 
 function Signup() {
+  const t = useT();
   const [created, setCreated] = useState(false);
   return (
     <form
@@ -192,13 +198,13 @@ function Signup() {
     >
       <label>
         Email
-        <Input type="email" placeholder="tu@ejemplo.com" required />
+        <Input type="email" placeholder={t("tu@ejemplo.com")} required />
       </label>
       <label>
-        Contraseña
+        {t("Contraseña")}
         <Input
           type="password"
-          placeholder="Al menos 8 caracteres"
+          placeholder={t("Al menos 8 caracteres")}
           minLength={8}
           required
         />
@@ -206,34 +212,36 @@ function Signup() {
       <Button type="submit">
         {created ? (
           <>
-            <Check size={16} /> Cuenta de ejemplo creada
+            <Check size={16} /> {t("Cuenta de ejemplo creada")}
           </>
         ) : (
           <>
-            Crear cuenta <ArrowRight size={16} />
+            {t("Crear cuenta")}
+            <ArrowRight size={16} />
           </>
         )}
       </Button>
       <p aria-live="polite">
         {created
-          ? "Ya puedes explorar tu nuevo espacio."
-          : "Tu espacio de trabajo, a un clic."}
+          ? t("Ya puedes explorar tu nuevo espacio.")
+          : t("Tu espacio de trabajo, a un clic.")}
       </p>
     </form>
   );
 }
 
 function Analytics() {
+  const t = useT();
   const [period, setPeriod] = useState("Semana");
   return (
     <div className={styles.board}>
       <div className={styles.column}>
         <Panel
-          title="La visión completa"
-          description="Cada número cuenta una historia."
+          title={t("La visión completa")}
+          description={t("Cada número cuenta una historia.")}
         >
           <div className={styles.cardBottom}>
-            <Badge variant="secondary">Ingresos totales</Badge>
+            <Badge variant="secondary">{t("Ingresos totales")}</Badge>
             <div className={styles.period}>
               {["Semana", "Mes"].map((value) => (
                 <button
@@ -241,7 +249,7 @@ function Analytics() {
                   aria-pressed={period === value}
                   onClick={() => setPeriod(value)}
                 >
-                  {value}
+                  {t(value)}
                 </button>
               ))}
             </div>
@@ -251,12 +259,12 @@ function Analytics() {
             <span> €</span>
           </div>
           <span className={styles.positive}>
-            ↗ 18,6% respecto al periodo anterior
+            {t("↗ 18,6% respecto al periodo anterior")}
           </span>
           <div
             className={styles.chart}
             role="img"
-            aria-label={`Ingresos por día, periodo: ${period}`}
+            aria-label={t("Ingresos por día, periodo: {0}", { 0: t(period) })}
           >
             {[35, 58, 42, 75, 61, 88, 100].map((height, index) => (
               <div key={index}>
@@ -265,16 +273,25 @@ function Analytics() {
                     height: `${period === "Semana" ? height : 110 - height / 2}%`,
                   }}
                 />
-                <span>{["L", "M", "X", "J", "V", "S", "D"][index]}</span>
+                <span>
+                  {
+                    [t("L"), t("M"), t("X"), t("J"), t("V"), t("S"), t("D")][
+                      index
+                    ]
+                  }
+                </span>
               </div>
             ))}
           </div>
         </Panel>
-        <Panel title="Objetivos del mes" description="Un paso más cerca.">
+        <Panel
+          title={t("Objetivos del mes")}
+          description={t("Un paso más cerca.")}
+        >
           {[
-            ["Nuevas suscripciones", 78],
-            ["Retención de clientes", 92],
-            ["Conversión", 64],
+            [t("Nuevas suscripciones"), 78],
+            [t("Retención de clientes"), 92],
+            [t("Conversión"), 64],
           ].map(([label, value]) => (
             <div className={styles.goal} key={label}>
               <div>
@@ -292,10 +309,10 @@ function Analytics() {
       </div>
       <div className={styles.column}>
         <Panel
-          title="En este momento"
-          description="Tu producto sigue creciendo."
+          title={t("En este momento")}
+          description={t("Tu producto sigue creciendo.")}
         >
-          <Badge variant="secondary">● En directo</Badge>
+          <Badge variant="secondary">{t("● En directo")}</Badge>
           <div className={styles.bigNumber}>1.284</div>
           <p className={styles.muted}>personas conectadas</p>
           <div className={styles.sparkline} aria-hidden="true">
@@ -303,26 +320,26 @@ function Analytics() {
           </div>
         </Panel>
         <Panel
-          title="Últimos movimientos"
-          description="Pequeños hitos. Grandes resultados."
+          title={t("Últimos movimientos")}
+          description={t("Pequeños hitos. Grandes resultados.")}
         >
           <Person
             name="Marta López"
-            role="Se ha unido al plan Pro · hace 2 min"
+            role={t("Se ha unido al plan Pro · hace 2 min")}
             index={0}
           />
           <Person
             name="Alex Chen"
-            role="Ha creado un proyecto · hace 8 min"
+            role={t("Ha creado un proyecto · hace 8 min")}
             index={1}
           />
           <Person
             name="Julia Romero"
-            role="Ha invitado a su equipo · hace 12 min"
+            role={t("Ha invitado a su equipo · hace 12 min")}
             index={2}
           />
         </Panel>
-        <Panel title="Tu informe, cuando quieras">
+        <Panel title={t("Tu informe, cuando quieras")}>
           <ReportButton />
         </Panel>
       </div>
@@ -331,6 +348,7 @@ function Analytics() {
 }
 
 function ReportButton() {
+  const t = useT();
   return (
     <Button
       variant="outline"
@@ -338,7 +356,9 @@ function ReportButton() {
         const url = URL.createObjectURL(
           new Blob(
             [
-              "Métrica,Valor\nIngresos semanales,24680\nUsuarios activos,1284\nRetención,92%",
+              t(
+                "Métrica,Valor\nIngresos semanales,24680\nUsuarios activos,1284\nRetención,92%",
+              ),
             ],
             { type: "text/csv;charset=utf-8" },
           ),
@@ -350,20 +370,21 @@ function ReportButton() {
         URL.revokeObjectURL(url);
       }}
     >
-      <ArrowDown size={16} /> Descargar informe
+      <ArrowDown size={16} /> {t("Descargar informe")}
     </Button>
   );
 }
 
 function Studio() {
+  const t = useT();
   const [color, setColor] = useState("#ad4c85");
   const [saved, setSaved] = useState(false);
   return (
     <div className={styles.board}>
       <div className={styles.column}>
         <Panel
-          title="Haz espacio a lo inesperado"
-          description="Moodboard / Colección 001"
+          title={t("Haz espacio a lo inesperado")}
+          description={t("Moodboard / Colección 001")}
         >
           <div className={styles.artwork} style={{ backgroundColor: color }}>
             <div />
@@ -378,13 +399,13 @@ function Studio() {
             <Sparkles size={30} />
           </div>
           <div className={styles.cardBottom}>
-            <span>Un lienzo lleno de posibilidades.</span>
+            <span>{t("Un lienzo lleno de posibilidades.")}</span>
             <Badge variant="secondary">Creative</Badge>
           </div>
         </Panel>
         <Panel
-          title="La paleta es tuya"
-          description="Elige un color y dale otra vida."
+          title={t("La paleta es tuya")}
+          description={t("Elige un color y dale otra vida.")}
         >
           <div className={styles.swatches}>
             {["#ad4c85", "#7251b5", "#dc7346", "#387d74", "#3e60ad"].map(
@@ -392,7 +413,7 @@ function Studio() {
                 <button
                   key={value}
                   style={{ backgroundColor: value }}
-                  aria-label={`Usar color ${value}`}
+                  aria-label={t("Usar color {0}", { 0: value })}
                   aria-pressed={color === value}
                   onClick={() => setColor(value)}
                 >
@@ -405,40 +426,46 @@ function Studio() {
       </div>
       <div className={styles.column}>
         <Panel
-          title="Una idea en marcha"
-          description="De la primera chispa al último detalle."
+          title={t("Una idea en marcha")}
+          description={t("De la primera chispa al último detalle.")}
         >
-          <Badge variant="secondary">En progreso</Badge>
+          <Badge variant="secondary">{t("En progreso")}</Badge>
           <h3 className={styles.projectTitle}>
-            Identidad para
+            {t("Identidad para")}
             <br />
             mentes inquietas.
           </h3>
           <div className={styles.goal}>
             <div>
-              <span>Progreso del proyecto</span>
+              <span>{t("Progreso del proyecto")}</span>
               <strong>68%</strong>
             </div>
-            <progress value={68} max={100} aria-label="Progreso del proyecto" />
+            <progress
+              value={68}
+              max={100}
+              aria-label={t("Progreso del proyecto")}
+            />
           </div>
-          <Person name="Emma Wilson" role="Dirección creativa" index={2} />
+          <Person name="Emma Wilson" role={t("Dirección creativa")} index={2} />
           <Button onClick={() => setSaved(!saved)}>
             {saved ? <Check size={16} /> : <Plus size={16} />}
-            {saved ? "Guardado en tu colección" : "Guardar en mi colección"}
+            {saved
+              ? t("Guardado en tu colección")
+              : t("Guardar en mi colección")}
           </Button>
         </Panel>
         <Panel
-          title="Hecho para colaborar"
-          description="Las ideas crecen cuando se comparten."
+          title={t("Hecho para colaborar")}
+          description={t("Las ideas crecen cuando se comparten.")}
         >
           <Person
             name="Sofía Martín"
-            role="«¡Esta dirección me encanta!»"
+            role={t("«¡Esta dirección me encanta!»")}
             index={0}
           />
           <Person
             name="Lucas García"
-            role="«Listo para darle vida.»"
+            role={t("«Listo para darle vida.»")}
             index={1}
           />
         </Panel>
@@ -448,14 +475,15 @@ function Studio() {
 }
 
 function Commerce() {
+  const t = useT();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   return (
     <div className={styles.board}>
       <div className={styles.column}>
         <Panel
-          title="Menos ruido. Más música."
-          description="La colección de tus días favoritos."
+          title={t("Menos ruido. Más música.")}
+          description={t("La colección de tus días favoritos.")}
         >
           <div className={styles.productArt}>
             <div className={styles.headphones}>
@@ -467,14 +495,14 @@ function Commerce() {
           <div className={styles.cardBottom}>
             <div>
               <h3>Studio headphones</h3>
-              <span>Salvia / Edición esencial</span>
+              <span>{t("Salvia / Edición esencial")}</span>
             </div>
             <strong>129 €</strong>
           </div>
           <div className={styles.purchase}>
             <div className={styles.quantity}>
               <button
-                aria-label="Reducir cantidad"
+                aria-label={t("Reducir cantidad")}
                 disabled={quantity === 1}
                 onClick={() => {
                   setQuantity(quantity - 1);
@@ -483,9 +511,9 @@ function Commerce() {
               >
                 −
               </button>
-              <output aria-label="Cantidad">{quantity}</output>
+              <output aria-label={t("Cantidad")}>{quantity}</output>
               <button
-                aria-label="Aumentar cantidad"
+                aria-label={t("Aumentar cantidad")}
                 onClick={() => {
                   setQuantity(quantity + 1);
                   setAdded(false);
@@ -496,7 +524,7 @@ function Commerce() {
             </div>
             <Button onClick={() => setAdded(true)}>
               <ShoppingBag size={16} />
-              {added ? "Añadido" : "Añadir a la bolsa"}
+              {added ? t("Añadido") : t("Añadir a la bolsa")}
             </Button>
           </div>
         </Panel>
@@ -505,19 +533,19 @@ function Commerce() {
             <Check size={22} />
           </span>
           <div>
-            <strong>Diseñado para durar</strong>
-            <p>Buenos materiales. Mejores experiencias.</p>
+            <strong>{t("Diseñado para durar")}</strong>
+            <p>{t("Buenos materiales. Mejores experiencias.")}</p>
           </div>
         </Card>
       </div>
       <div className={styles.column}>
         <Panel
-          title="Tu bolsa"
-          description="Una pequeña inversión en tus grandes momentos."
+          title={t("Tu bolsa")}
+          description={t("Una pequeña inversión en tus grandes momentos.")}
         >
           <Person
             name="Studio headphones"
-            role={`${added ? quantity : 0} unidades · Salvia`}
+            role={t("{0} unidades · Salvia", { 0: added ? quantity : 0 })}
             index={1}
           />
           <div className={styles.receipt}>
@@ -526,8 +554,8 @@ function Commerce() {
               <strong>{added ? quantity * 129 : 0} €</strong>
             </div>
             <div>
-              <span>Envío</span>
-              <span>Gratis</span>
+              <span>{t("Envío")}</span>
+              <span>{t("Gratis")}</span>
             </div>
             <div>
               <strong>Total</strong>
@@ -536,21 +564,21 @@ function Commerce() {
           </div>
           <p className={styles.muted} aria-live="polite">
             {added
-              ? "Tu selección está lista. Esta es una tienda de ejemplo."
-              : "Añade un producto para verlo aquí."}
+              ? t("Tu selección está lista. Esta es una tienda de ejemplo.")
+              : t("Añade un producto para verlo aquí.")}
           </p>
         </Panel>
         <Panel
-          title="Los detalles importan"
-          description="Una compra a tu medida."
+          title={t("Los detalles importan")}
+          description={t("Una compra a tu medida.")}
         >
           <div className={styles.setting}>
-            <span>Envolver para regalo</span>
-            <Switch aria-label="Envolver para regalo" />
+            <span>{t("Envolver para regalo")}</span>
+            <Switch aria-label={t("Envolver para regalo")} />
           </div>
           <div className={styles.setting}>
-            <span>Recibir novedades</span>
-            <Switch aria-label="Recibir novedades" defaultChecked />
+            <span>{t("Recibir novedades")}</span>
+            <Switch aria-label={t("Recibir novedades")} defaultChecked />
           </div>
         </Panel>
       </div>
@@ -561,6 +589,7 @@ function Commerce() {
 const scenes = [Workspace, Analytics, Studio, Commerce];
 
 export default function MainPage() {
+  const t = useT();
   const [active, setActive] = useState(0);
   const [dark, setDark] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -583,17 +612,21 @@ export default function MainPage() {
     <main className={`kivora-theme ${styles.page}`} data-theme={theme}>
       <div className={styles.backdrop} aria-hidden="true" />
       <header className={styles.header}>
-        <Link className={styles.brand} href="/" aria-label="Kivora, inicio">
+        <Link
+          className={styles.brand}
+          href="/"
+          aria-label={t("Kivora, inicio")}
+        >
           <span className={styles.brandMark}>
             <Layers size={23} strokeWidth={2.4} />
           </span>
           kivora
         </Link>
-        <nav className={styles.nav} aria-label="Navegación principal">
+        <nav className={styles.nav} aria-label={t("Navegación principal")}>
           <Link className={styles.navActive} href="/docs/componentes">
-            Componentes
+            {t("Componentes")}
           </Link>
-          <Link href="/docs">Documentación</Link>
+          <Link href="/docs">{t("Documentación")}</Link>
         </nav>
         <div className={styles.headerActions}>
           <Link className={styles.mobileDocs} href="/docs">
@@ -603,16 +636,28 @@ export default function MainPage() {
             href="https://www.npmjs.com/package/@kivora/nextjs"
             target="_blank"
             rel="noreferrer"
-            aria-label="Kivora en npm"
-            title="Kivora en npm"
+            aria-label={t("Kivora en npm")}
+            title={t("Kivora en npm")}
             className={styles.npmLink}
           >
-            <svg width="32" height="14" viewBox="0 0 18 7" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d="M0 0v6h5v1h4V6h9V0H0z M1 1h4v4H4V2H3v3H1V1z M6 1h4v4H9v1H6V1z M7 2v2h1V2H7z M11 1h6v4h-1V2h-1v3h-1V2h-1v3h-2V1z" />
+            <svg
+              width="32"
+              height="14"
+              viewBox="0 0 18 7"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fillRule="evenodd"
+                d="M0 0v6h5v1h4V6h9V0H0z M1 1h4v4H4V2H3v3H1V1z M6 1h4v4H9v1H6V1z M7 2v2h1V2H7z M11 1h6v4h-1V2h-1v3h-1V2h-1v3h-2V1z"
+              />
             </svg>
           </a>
+          <LanguagePicker />
           <button
-            aria-label={dark ? "Usar tema del ejemplo" : "Activar tema oscuro"}
+            aria-label={
+              dark ? t("Usar tema del ejemplo") : t("Activar tema oscuro")
+            }
             aria-pressed={dark}
             onClick={() => setDark(!dark)}
           >
@@ -627,18 +672,20 @@ export default function MainPage() {
               <span /> React + React Native <ArrowRight size={13} />
             </Link>
             <h1>
-              <span className={styles.headlineLead}>Tu web y tu app.</span>
-              <span>Mismo diseño.</span>
+              <span className={styles.headlineLead}>
+                {t("Tu web y tu app.")}
+              </span>
+              <span>{t("Mismo diseño.")}</span>
             </h1>
             <p className={styles.description}>
-              Componentes para React y React Native con un mismo lenguaje
-              visual. Lleva tu marca de la web al móvil sin rediseñar cada
-              pantalla. Crea más rápido. Haz que todo encaje.
+              {t(
+                "Componentes para React y React Native con un mismo lenguaje visual. Lleva tu marca de la web al móvil sin rediseñar cada pantalla. Crea más rápido. Haz que todo encaje.",
+              )}
             </p>
             <div className={styles.code}>
               <div className={styles.codeHeader}>
                 <span>
-                  <Code2 size={14} /> Empieza a construir
+                  <Code2 size={14} /> {t("Empieza a construir")}
                 </span>
                 <span>React / Next.js</span>
               </div>
@@ -650,7 +697,7 @@ export default function MainPage() {
                   <span className={styles.string}>{'"@kivora/nextjs"'}</span>
                   {";\n\n"}
                   <span className={styles.syntax}>{"<Button>"}</span>
-                  {"Crear mi app"}
+                  {t("Crear mi app")}
                   <span className={styles.syntax}>{"</Button>"}</span>
                 </code>
               </pre>
@@ -658,20 +705,22 @@ export default function MainPage() {
             <div className={styles.actions}>
               <Button className={styles.startButton} onClick={copyInstall}>
                 {copied ? <Check size={16} /> : <Copy size={16} />}
-                {copied ? "Comando copiado" : "npx @kivora/init"}
+                {copied ? t("Comando copiado") : "npx @kivora/init"}
               </Button>
               <Button variant="ghost" onClick={() => move(active + 1)}>
-                Ver ejemplos <ArrowRight size={16} />
+                {t("Ver ejemplos")}
+                <ArrowRight size={16} />
               </Button>
             </div>
             <p className={styles.footnote}>
-              Una identidad. Todas tus pantallas.
+              {t("Una identidad. Todas tus pantallas.")}
             </p>
           </div>
           <div className={styles.sliderControls}>
             <div className={styles.sliderLabel}>
               <span>
-                Pruébalo en directo <span className={styles.liveDot} />
+                {t("Pruébalo en directo")}
+                <span className={styles.liveDot} />
               </span>
               <span className={styles.slideCount}>
                 0{active + 1} <span>/ 04</span>
@@ -680,7 +729,7 @@ export default function MainPage() {
             <div
               className={styles.tabs}
               role="tablist"
-              aria-label="Ejemplos de Kivora"
+              aria-label={t("Ejemplos de Kivora")}
             >
               {examples.map((example, index) => (
                 <button
@@ -716,8 +765,8 @@ export default function MainPage() {
         <div
           className={styles.showcase}
           role="region"
-          aria-label="Galería de ejemplos"
-          aria-roledescription="carrusel"
+          aria-label={t("Galería de ejemplos")}
+          aria-roledescription={t("carrusel")}
           onTouchStart={(event) => {
             touchStart.current = event.touches[0].clientX;
           }}
@@ -732,10 +781,12 @@ export default function MainPage() {
         >
           <div className={styles.showcaseHeader}>
             <span>
-              <span className={styles.previewDot} /> {examples[active].category}
+              <span className={styles.previewDot} />{" "}
+              {t(examples[active].category)}
             </span>
             <span className={styles.previewMeta}>
-              HECHO CON KIVORA <Layers size={13} />
+              {t("HECHO CON KIVORA")}
+              <Layers size={13} />
             </span>
           </div>
           <div className={styles.viewport}>
@@ -768,18 +819,18 @@ export default function MainPage() {
                   : theme === "candy"
                     ? "Rose"
                     : "Sage"}{" "}
-              theme <span className={styles.footerDivider}>/</span> Componentes
-              reales. Pruébalos.
+              theme <span className={styles.footerDivider}>/</span>{" "}
+              {t("Componentes reales. Pruébalos.")}
             </span>
             <div>
               <button
-                aria-label="Ejemplo anterior"
+                aria-label={t("Ejemplo anterior")}
                 onClick={() => move(active - 1)}
               >
                 <ArrowLeft size={17} />
               </button>
               <button
-                aria-label="Ejemplo siguiente"
+                aria-label={t("Ejemplo siguiente")}
                 onClick={() => move(active + 1)}
               >
                 <ArrowRight size={17} />

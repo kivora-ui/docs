@@ -16,7 +16,7 @@ test("sitemap and robots expose the public canonical routes", async ({ request }
 });
 
 test("metadata and structured data are present without JavaScript", async ({ browser, request }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+  const context = await browser.newContext({ javaScriptEnabled: false, locale: "es-ES" });
   const page = await context.newPage();
   for (const path of ["/", "/docs", "/docs/instalacion", "/docs/componentes/button"]) {
     await page.goto(`http://127.0.0.1:3100${path}`);

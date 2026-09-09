@@ -1583,3 +1583,10 @@
     transition: none;
   }
 }
+
+@media (max-width: 380px) {
+  .topNav > a { display: none; }
+  .topNav { gap: 8px; }
+  .topbar { padding-inline: 12px; gap: 8px; }
+  .topbarBrand { gap: 8px; }
+}

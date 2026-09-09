@@ -18,7 +18,9 @@ new Function("exports", "require", "module", transpiled)(
   require,
   mod,
 );
-const { components } = mod.exports;
+const original = mod.exports.components;
+const translations = JSON.parse(fs.readFileSync("app/docs/examples.en.json", "utf8"));
+const components = [...original, ...original.map(doc => ({ ...doc, code: translations[doc.code] ?? doc.code, stories: doc.stories.map(story => ({ ...story, code: translations[story.code] ?? story.code })) }))];
 const api = JSON.parse(fs.readFileSync("app/docs/api.generated.json", "utf8"));
 const documented = new Set(
   components.flatMap((component) => component.exports),
@@ -69,7 +71,7 @@ try {
     process.exitCode = 1;
   } else
     console.log(
-      `All examples typecheck across ${components.length} component families.`,
+      `All examples typecheck across ${original.length} component families in Spanish and English.`,
     );
 } finally {
   fs.unlinkSync(filename);

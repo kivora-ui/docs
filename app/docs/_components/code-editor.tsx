@@ -1,4 +1,5 @@
 "use client";
+import { useT } from "../../_lib/i18n/provider";
 
 import { useId } from "react";
 import Editor from "react-simple-code-editor";
@@ -9,7 +10,10 @@ import styles from "../docs.module.css";
 const accessibleLight = {
   plain: { color: "#383a42", backgroundColor: "transparent" },
   styles: [
-    { types: ["comment", "prolog", "doctype", "cdata"], style: { color: "#595b64" } },
+    {
+      types: ["comment", "prolog", "doctype", "cdata"],
+      style: { color: "#595b64" },
+    },
     { types: ["keyword", "operator"], style: { color: "#6f42a1" } },
     { types: ["string", "char", "regex"], style: { color: "#286638" } },
     { types: ["tag", "attr-name"], style: { color: "#a32f47" } },
@@ -27,14 +31,14 @@ export function CodeEditor({
   onChange: (code: string) => void;
   name: string;
 }) {
+  const t = useT();
   const { theme } = useDocsTheme();
   const editorId = useId();
   return (
     <div className={styles.editorScroll}>
-      <label
-        className="sr-only"
-        htmlFor={editorId}
-      >{`Código editable de ${name}`}</label>
+      <label className="sr-only" htmlFor={editorId}>
+        {t("Código editable de {0}", { 0: name })}
+      </label>
       <Editor
         value={code}
         onValueChange={onChange}

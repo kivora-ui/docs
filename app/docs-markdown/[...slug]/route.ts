@@ -1,11 +1,33 @@
-import { documents, documentText, llmsIndex, markdownHref, textResponse } from "../../_lib/docs-markdown";
-export const dynamic = "force-static";
-export function generateStaticParams() {
-  return ["index.md", "componentes.md", ...documents.map(doc => markdownHref(doc.path).replace("/docs-markdown/", ""))].map(path => ({ slug: path.split("/") }));
-}
-export async function GET(_request: Request, { params }: { params: Promise<{ slug: string[] }> }) {
+import {
+  getDocuments,
+  documentText,
+  llmsIndex,
+  markdownHref,
+  textResponse,
+} from "../../_lib/docs-markdown";
+import { getLocale } from "../../_lib/i18n/server";
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string[] }> },
+) {
+  const locale = await getLocale();
   const path = `/docs-markdown/${(await params).slug.join("/")}`;
-  if (path === "/docs-markdown/index.md" || path === "/docs-markdown/componentes.md") return textResponse(llmsIndex(), path.endsWith("/index.md") ? "/docs" : "/docs/componentes");
-  const doc = documents.find(doc => markdownHref(doc.path) === path);
-  return doc ? textResponse(documentText(doc), doc.path) : new Response("Documento no encontrado", { status: 404 });
+  if (
+    path === "/docs-markdown/index.md" ||
+    path === "/docs-markdown/componentes.md"
+  )
+    return textResponse(
+      llmsIndex(locale),
+      path.endsWith("/index.md") ? "/docs" : "/docs/componentes",
+      locale,
+    );
+  const doc = getDocuments(locale).find(
+    (doc) => markdownHref(doc.path) === path,
+  );
+  return doc
+    ? textResponse(documentText(doc, locale), doc.path, locale)
+    : new Response(
+        locale === "es" ? "Documento no encontrado" : "Document not found",
+        { status: 404 },
+      );
 }

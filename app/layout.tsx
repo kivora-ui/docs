@@ -1,3 +1,6 @@
+import { getLocale } from "./_lib/i18n/server";
+import { LocaleProvider } from "./_lib/i18n/provider";
+import { translator } from "./_lib/i18n";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
@@ -18,25 +21,43 @@ const newsreader = Newsreader({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: { default: "Kivora · Componentes para React y React Native", template: "%s · Kivora" },
-  description: siteDescription,
-  openGraph: { type: "website", siteName: "Kivora", locale: "es_ES", images: [socialImage] },
-  twitter: { card: "summary_large_image", images: [socialImage] },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = translator(locale);
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: `Kivora · ${t("Componentes para React y React Native")}`,
+      template: "%s · Kivora",
+    },
+    description: t(siteDescription),
+    openGraph: {
+      type: "website",
+      siteName: "Kivora",
+      locale: locale === "es" ? "es_ES" : "en_US",
+      images: [{ ...socialImage, alt: t(socialImage.alt) }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [{ ...socialImage, alt: t(socialImage.alt) }],
+    },
+    robots: { index: true, follow: true },
+  };
+}
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
   return (
     <html
-      lang="es"
+      lang={locale}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}
     >
-      <head><link rel="describedby" href="/llms.txt" type="text/markdown" /></head>
+      <head>
+        <link rel="describedby" href="/llms.txt" type="text/markdown" />
+      </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        {children}
+        <LocaleProvider locale={locale}>{children}</LocaleProvider>
       </body>
     </html>
   );

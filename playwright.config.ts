@@ -6,6 +6,8 @@ export default defineConfig({
   reporter: "line",
   use: {
     baseURL: "http://127.0.0.1:3100",
+    locale: "es-ES",
+    extraHTTPHeaders: { "Accept-Language": "es-ES" },
   },
   webServer: {
     command: "npm run start -- -p 3100",

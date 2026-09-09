@@ -1,4 +1,5 @@
 "use client";
+import { useT, useLocale, LanguagePicker } from "../../_lib/i18n/provider";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,7 +22,8 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { components, componentHref, groups, guides } from "../catalog";
+import { componentHref } from "../catalog";
+import { getDocs } from "../localized";
 import styles from "../docs.module.css";
 
 export type DocsTheme = "light" | "dark" | "candy" | "mint";
@@ -31,26 +33,27 @@ const ThemeContext = createContext<{
 }>({ theme: "light", setTheme: () => {} });
 export const useDocsTheme = () => useContext(ThemeContext);
 export function ThemePicker() {
+  const t = useT();
   const { theme, setTheme } = useDocsTheme();
   return (
     <div
       className={styles.themePicker}
       role="group"
-      aria-label="Tema de la documentación"
+      aria-label={t("Tema de la documentación")}
     >
       {(
         [
-          ["light", "Claro", "#6558e8"],
-          ["dark", "Oscuro", "#282534"],
-          ["candy", "Rosa", "#bf6396"],
-          ["mint", "Verde", "#438e71"],
+          ["light", t("Claro"), "#6558e8"],
+          ["dark", t("Oscuro"), "#282534"],
+          ["candy", t("Rosa"), "#bf6396"],
+          ["mint", t("Verde"), "#438e71"],
         ] as const
       ).map(([value, label, color]) => (
         <button
           type="button"
           key={value}
-          title={label}
-          aria-label={`Tema ${label.toLowerCase()}`}
+          title={t(label)}
+          aria-label={t("Tema {0}", { 0: label.toLowerCase() })}
           aria-pressed={theme === value}
           onClick={() => setTheme(value)}
         >
@@ -61,6 +64,9 @@ export function ThemePicker() {
   );
 }
 export function DocsShell({ children }: { children: ReactNode }) {
+  const t = useT();
+  const locale = useLocale();
+  const { components, guides, groups } = getDocs(locale);
   const pathname = usePathname();
   const [query, setQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -97,14 +103,14 @@ export function DocsShell({ children }: { children: ReactNode }) {
       <KivoraProvider colorMode={theme === "dark" ? "dark" : "light"}>
         <div className={`kivora-theme ${styles.shell}`} data-theme={theme}>
           <a href="#docs-content" className={styles.skipLink}>
-            Saltar al contenido
+            {t("Saltar al contenido")}
           </a>
           <header className={styles.topbar}>
             <div className={styles.topbarBrand}>
               <button
                 className={styles.mobileToggle}
                 aria-label={
-                  mobileOpen ? "Cerrar navegación" : "Abrir navegación"
+                  mobileOpen ? t("Cerrar navegación") : t("Abrir navegación")
                 }
                 aria-expanded={mobileOpen}
                 aria-controls="docs-sidebar"
@@ -118,18 +124,21 @@ export function DocsShell({ children }: { children: ReactNode }) {
               </Link>
               <span className={styles.brandDivider} />
               <Link href="/docs" className={styles.handbook} onClick={navigate}>
-                Documentación
+                {t("Documentación")}
               </Link>
             </div>
-            <nav className={styles.topNav} aria-label="Navegación principal">
-              <Link href="/">Ejemplos</Link>
+            <nav
+              className={styles.topNav}
+              aria-label={t("Navegación principal")}
+            >
+              <Link href="/">{t("Ejemplos")}</Link>
               <Link
                 href="/docs/componentes"
                 aria-current={
                   pathname === "/docs/componentes" ? "page" : undefined
                 }
               >
-                Componentes
+                {t("Componentes")}
               </Link>
               <a
                 href="https://www.npmjs.com/package/@kivora/nextjs"
@@ -138,13 +147,14 @@ export function DocsShell({ children }: { children: ReactNode }) {
               >
                 npm <ArrowUpRight size={13} />
               </a>
+              <LanguagePicker />
               <ThemePicker />
             </nav>
           </header>
           {mobileOpen && (
             <button
               className={styles.mobileBackdrop}
-              aria-label="Cerrar menú"
+              aria-label={t("Cerrar menú")}
               onClick={() => setMobileOpen(false)}
             />
           )}
@@ -152,15 +162,15 @@ export function DocsShell({ children }: { children: ReactNode }) {
             id="docs-sidebar"
             className={styles.sidebar}
             data-open={mobileOpen}
-            aria-label="Navegación de documentación"
+            aria-label={t("Navegación de documentación")}
           >
             <div className={styles.search}>
               <Search size={15} />
               <input
                 ref={search}
                 type="search"
-                aria-label="Buscar en la documentación"
-                placeholder="Buscar documentación…"
+                aria-label={t("Buscar en la documentación")}
+                placeholder={t("Buscar documentación…")}
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
               />
@@ -176,12 +186,12 @@ export function DocsShell({ children }: { children: ReactNode }) {
                 onClick={navigate}
               >
                 <BookOpen size={15} />
-                Bienvenido a Kivora
+                {t("Bienvenido a Kivora")}
               </Link>
               {visibleGuides.length > 0 && (
                 <details open className={styles.navGroup}>
                   <summary>
-                    Primeros pasos
+                    {t("Primeros pasos")}
                     <ChevronDown size={13} />
                   </summary>
                   <div>
@@ -199,7 +209,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
                 </details>
               )}
               <div className={styles.navSection}>
-                <span>COMPONENTES</span>
+                <span>{t("COMPONENTES")}</span>
                 <span>{components.length}</span>
               </div>
               {groups.map((group) => {
@@ -241,8 +251,9 @@ export function DocsShell({ children }: { children: ReactNode }) {
               })}
               {query && !visibleComponents.length && !visibleGuides.length && (
                 <p className={styles.noResults} role="status">
-                  No hay resultados para «{query}». Prueba con Button, temas o
-                  formularios.
+                  {t("No hay resultados para «")}
+                  {query}
+                  {t("». Prueba con Button, temas o formularios.")}
                 </p>
               )}
             </nav>
@@ -254,9 +265,10 @@ export function DocsShell({ children }: { children: ReactNode }) {
           <div className={styles.document} key={pathname}>
             {children}
             <footer className={styles.footer}>
-              <span>Hecho con Kivora. Pensado para crear.</span>
+              <span>{t("Hecho con Kivora. Pensado para crear.")}</span>
               <Link href="/">
-                Volver a los ejemplos <ArrowUpRight size={13} />
+                {t("Volver a los ejemplos")}
+                <ArrowUpRight size={13} />
               </Link>
             </footer>
           </div>

@@ -15,7 +15,8 @@
     "docs:check": "node scripts/check-docs-examples.mjs",
     "postinstall": "node scripts/patch-kivora-upload.mjs",
     "predev": "node scripts/patch-kivora-upload.mjs",
-    "prebuild": "node scripts/patch-kivora-upload.mjs"
+    "prebuild": "node scripts/patch-kivora-upload.mjs",
+    "docs:translate": "node scripts/generate-docs-translations.mjs"
   },
   "dependencies": {
     "@kivora/codes": "^0.1.0",

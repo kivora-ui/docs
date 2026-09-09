@@ -15,7 +15,7 @@ La web tenía títulos y descripciones básicos, pero carecía de sitemap, robot
 - `/llms-full.txt`: documentación completa con ejemplos y atributos.
 - `/docs-markdown/<ruta>.md`: archivos Markdown individuales. Por ejemplo `/docs-markdown/componentes/button.md`. Las páginas HTML anuncian su versión mediante `rel="alternate"`; los documentos de texto enlazan su canónica HTML mediante la cabecera Link.
 
-Los archivos de IA se generan durante el build a partir de `catalog.ts`, `content.ts` y `api.generated.json`. Al actualizar la librería, ejecutar `npm run docs:api`, `npm run docs:check` y volver a compilar. No incluyen información introducida por visitantes ni datos de sessionStorage.
+Los archivos de IA se sirven según el idioma de la petición, a partir de `catalog.ts`, `content.ts`, sus traducciones y `api.generated.json`. Al actualizar la librería, ejecutar `npm run docs:api`, `npm run docs:check` y volver a compilar. No incluyen información introducida por visitantes ni datos de sessionStorage.
 
 ## Qué consulta cada robot
 
@@ -45,3 +45,11 @@ Para saber quién visita realmente la web, consultar registros HTTP del hosting/
 ## Verificación
 
 `tests/e2e/seo.spec.ts` comprueba las rutas del sitemap, las reglas públicas, canónicas y datos estructurados sin JavaScript, lectura del ejemplo, imagen social, todos los enlaces Markdown del índice y respuestas 404. Ejecutar `npm run test:e2e` para compilar y verificar junto con las pruebas de documentación y equipo.
+
+## Idiomas en la misma URL
+
+La web ofrece español e inglés sin prefijos ni parámetros de idioma. El servidor utiliza la cookie `kivora-locale` cuando el visitante elige ES/EN; en otro caso lee el idioma preferido de `Accept-Language`. Español regional (`es-ES`, `es-MX`, etc.) muestra español. Inglés, idiomas no soportados y peticiones sin idioma muestran inglés.
+
+HTML, metadatos, JSON-LD, imagen social, Markdown e índices de IA siguen esa selección. Las páginas se renderizan por petición; los documentos de texto incluyen `Content-Language`, `Vary: Accept-Language, Cookie` y `Cache-Control: private, no-store`. No se debe imponer una caché HTML compartida que ignore la cookie o el idioma en el CDN.
+
+Las canónicas y el sitemap siguen teniendo una sola URL por documento. No se anuncian URL alternativas con `hreflang` porque no hay rutas distintas por idioma. Un rastreador sin idioma recibe la versión inglesa; este diseño no ofrece dos páginas indexables independientes por idioma.

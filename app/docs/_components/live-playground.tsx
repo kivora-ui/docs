@@ -1,4 +1,5 @@
 "use client";
+import { useT } from "../../_lib/i18n/provider";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as Kivora from "@kivora/nextjs";
 import {
@@ -85,10 +86,14 @@ function sourceFile(code: string) {
     "AreaChart",
     "Area",
   ].filter((name) => new RegExp(`\\b${name}\\b`).test(code));
-  const icons = Object.keys(lucideIcons).filter((name) => new RegExp(`\\b${name}\\b`).test(code));
+  const icons = Object.keys(lucideIcons).filter((name) =>
+    new RegExp(`\\b${name}\\b`).test(code),
+  );
   const imports = [
     '"use client";',
-    ...(icons.length ? [`import { ${icons.join(", ")} } from "lucide-react";`] : []),
+    ...(icons.length
+      ? [`import { ${icons.join(", ")} } from "lucide-react";`]
+      : []),
     ...(hooks.length ? [`import { ${hooks.join(", ")} } from "react";`] : []),
     ...(symbols.length
       ? [`import { ${symbols.join(", ")} } from "@kivora/nextjs";`]
@@ -100,11 +105,12 @@ function sourceFile(code: string) {
   return `${imports.join("\n")}\n\n${code.trim().startsWith("function ") ? `export default ${code}` : `export default function Example() {\n  return (\n    ${code}\n  );\n}`}`;
 }
 export default function LivePlayground({ doc, props }: PlaygroundProps) {
+  const t = useT();
   const [story, setStory] = useState(0);
   const [code, setCode] = useState(doc.code);
   const [narrow, setNarrow] = useState(false);
   const [copied, setCopied] = useState("");
-  const stories = [{ name: "Básico", code: doc.code }, ...doc.stories];
+  const stories = [{ name: t("Básico"), code: doc.code }, ...doc.stories];
   const controls = props
     .filter(
       (prop) =>
@@ -147,9 +153,9 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
   async function copy() {
     try {
       await navigator.clipboard.writeText(sourceFile(code));
-      setCopied("Copiado");
+      setCopied(t("Copiado"));
     } catch {
-      setCopied("No se pudo copiar");
+      setCopied(t("No se pudo copiar"));
     }
     window.setTimeout(() => setCopied(""), 2000);
   }
@@ -159,7 +165,7 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
         <div
           className={styles.storyTabs}
           role="group"
-          aria-label="Ejemplos del componente"
+          aria-label={t("Ejemplos del componente")}
         >
           {stories.map((item, index) => (
             <button
@@ -176,14 +182,14 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
         </div>
         <div className={styles.previewActions}>
           <button
-            aria-label={narrow ? "Vista de escritorio" : "Vista móvil"}
+            aria-label={narrow ? t("Vista de escritorio") : t("Vista móvil")}
             aria-pressed={narrow}
             onClick={() => setNarrow(!narrow)}
           >
             {narrow ? <Smartphone size={15} /> : <Monitor size={15} />}
           </button>
           <button
-            aria-label="Restablecer ejemplo"
+            aria-label={t("Restablecer ejemplo")}
             onClick={() => setCode(stories[story].code)}
           >
             <RotateCcw size={14} />
@@ -194,7 +200,7 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
         <div className={styles.previewCanvas} data-narrow={narrow}>
           <span className={styles.previewCaption}>
             <i />
-            VISTA PREVIA EN DIRECTO
+            {t("VISTA PREVIA EN DIRECTO")}
           </span>
           <LivePreview className={styles.preview} data-testid="live-preview" />
         </div>
@@ -207,7 +213,8 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
       {controls.length > 0 && (
         <details className={styles.propControls} open>
           <summary>
-            Propiedades <span>Ajusta el componente sin escribir código</span>
+            {t("Propiedades")}
+            <span>{t("Ajusta el componente sin escribir código")}</span>
           </summary>
           <div>
             {controls.map((prop) => (
@@ -233,7 +240,7 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
                     }
                   >
                     <option value="" disabled>
-                      Por defecto
+                      {t("Por defecto")}
                     </option>
                     {[...prop.type.matchAll(/"([^"]+)"/g)].map(
                       (match, index) => (
@@ -245,10 +252,10 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
                   </select>
                 ) : (
                   <input
-                    aria-label={`Propiedad ${prop.name}`}
+                    aria-label={t("Propiedad {0}", { 0: prop.name })}
                     type={prop.type === "number" ? "number" : "text"}
                     value={propValue(prop.name)}
-                    placeholder="Por defecto"
+                    placeholder={t("Por defecto")}
                     onChange={(event) =>
                       updateProp(
                         prop.name,
@@ -266,17 +273,19 @@ export default function LivePlayground({ doc, props }: PlaygroundProps) {
       <div className={styles.editorHeader}>
         <span>
           <Code2 size={14} />
-          Código editable <small>JSX</small>
+          {t("Código editable")}
+          <small>JSX</small>
         </span>
-        <button onClick={copy} aria-label="Copiar ejemplo completo">
-          {copied === "Copiado" ? <Check size={14} /> : <Copy size={14} />}
-          <span aria-live="polite">{copied || "Copiar"}</span>
+        <button onClick={copy} aria-label={t("Copiar ejemplo completo")}>
+          {copied === t("Copiado") ? <Check size={14} /> : <Copy size={14} />}
+          <span aria-live="polite">{copied || t("Copiar")}</span>
         </button>
       </div>
       <CodeEditor code={code} onChange={setCode} name={doc.name} />
       <div className={styles.editorHint}>
-        Edita el JSX y observa el resultado. Kivora, los hooks de React y los
-        gráficos del ejemplo ya están importados. «Copiar» incluye los imports.
+        {t(
+          "Edita el JSX y observa el resultado. Kivora, los hooks de React y los gráficos del ejemplo ya están importados. «Copiar» incluye los imports.",
+        )}
       </div>
     </div>
   );

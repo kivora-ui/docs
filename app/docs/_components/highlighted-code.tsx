@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "../../_lib/i18n/provider";
 import { Code, type CodeProps } from "@kivora/nextjs";
 import { useEffect, useRef } from "react";
 import styles from "./highlighted-code.module.css";
@@ -30,17 +31,31 @@ for (const [name, grammar] of Object.entries({
 }
 
 export function HighlightedCode(props: CodeProps) {
+  const locale = useLocale();
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // Kivora exposes the root ref, but not SyntaxHighlighter's scroll container.
     // Make that actual container keyboard-scrollable, including in playgrounds.
-    const scrollers = [...(root.current?.querySelectorAll("div") ?? [])]
-      .filter(element => getComputedStyle(element).overflowX === "auto");
+    const scrollers = [...(root.current?.querySelectorAll("div") ?? [])].filter(
+      (element) => getComputedStyle(element).overflowX === "auto",
+    );
     for (const element of scrollers) {
       element.tabIndex = 0;
       element.setAttribute("role", "region");
-      element.setAttribute("aria-label", `Código ${props.filename ?? props.language ?? "de ejemplo"}, desplazamiento horizontal`);
+      element.setAttribute(
+        "aria-label",
+        locale === "es"
+          ? `Código ${props.filename ?? props.language ?? "de ejemplo"}, desplazamiento horizontal`
+          : `${props.filename ?? props.language ?? "Example"} code, scroll horizontally`,
+      );
     }
-  }, [props.children, props.filename, props.language, props.inline]);
-  return <Code {...props} ref={root} data-code-theme={props.theme ?? "light"} className={`${styles.code} ${props.className ?? ""}`} />;
+  }, [props.children, props.filename, props.language, props.inline, locale]);
+  return (
+    <Code
+      {...props}
+      ref={root}
+      data-code-theme={props.theme ?? "light"}
+      className={`${styles.code} ${props.className ?? ""}`}
+    />
+  );
 }
