@@ -1,0 +1,15 @@
+.code [tabindex="0"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+.code :global(.linenumber) { color: var(--subtle) !important; }
+
+/* Kivora's bundled atomOneLight theme emits inline colors and omits some
+   token classes. Match its hex (SSR) and RGB (client) representations. */
+.code[data-code-theme="light"] code span { color: #383a42 !important; }
+.code[data-code-theme="light"] span:is([style*="#a626a4"], [style*="166, 38, 164"]) { color: #6f42a1 !important; }
+.code[data-code-theme="light"] span:is([style*="#50a14f"], [style*="80, 161, 79"]) { color: #286638 !important; }
+.code[data-code-theme="light"] span:is([style*="#e45649"], [style*="228, 86, 73"]) { color: #a32f47 !important; }
+.code[data-code-theme="light"] span:is([style*="#4078f2"], [style*="64, 120, 242"]) { color: #2457a7 !important; }
+.code[data-code-theme="light"] span:is([style*="#986801"], [style*="152, 104, 1"], [style*="#c18401"], [style*="193, 132, 1"]) { color: #875000 !important; }
+.code[data-code-theme="light"] span:is([style*="#a0a1a7"], [style*="160, 161, 167"]) { color: #595b64 !important; }

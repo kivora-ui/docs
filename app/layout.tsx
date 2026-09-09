@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import { Geist, Geist_Mono } from "next/font/google";
-import { resolveInitialPreferences } from "@/lib/preferences";
-import { Providers } from "@/providers/app-providers";
+import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
+import { siteUrl, siteDescription, socialImage } from "./_lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,25 +13,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Kivora",
-  description: "Componentes multiplataforma para Web y React Native.",
+  metadataBase: new URL(siteUrl),
+  title: { default: "Kivora · Componentes para React y React Native", template: "%s · Kivora" },
+  description: siteDescription,
+  openGraph: { type: "website", siteName: "Kivora", locale: "es_ES", images: [socialImage] },
+  twitter: { card: "summary_large_image", images: [socialImage] },
+  robots: { index: true, follow: true },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const cookieStore = await cookies();
-  const { locale, colorMode } = resolveInitialPreferences(cookieStore);
-
   return (
     <html
-      lang={locale}
+      lang="es"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}
     >
+      <head><link rel="describedby" href="/llms.txt" type="text/markdown" /></head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <Providers locale={locale} colorMode={colorMode}>
-          {children}
-        </Providers>
+        {children}
       </body>
     </html>
   );

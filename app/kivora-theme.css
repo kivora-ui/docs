@@ -1,0 +1,83 @@
+.kivora-theme,
+body:has(.kivora-theme) {
+  --surface: #ffffffd9;
+  --ink: #25262c;
+  --subtle: #626471;
+  --line: #2624431a;
+  --accent: #5748ce;
+  --wash: #f7f8fc;
+  --color-background: #fafaff;
+  --color-foreground: #25262c;
+  --color-card: #ffffff;
+  --color-card-foreground: #25262c;
+  --color-primary: #5748ce;
+  --color-primary-foreground: #fff;
+  --color-secondary: #efedf9;
+  --color-secondary-foreground: #6558a5;
+  --color-muted: #f1f0f6;
+  --color-muted-foreground: #626471;
+  --color-border: #e3e1ed;
+  --color-input: #dedce8;
+  --color-ring: #9b91ee;
+  --color-accent: #eeecfa;
+  --color-accent-foreground: #5147b8;
+  color-scheme: light;
+}
+.kivora-theme[data-theme="dark"],
+body:has(.kivora-theme[data-theme="dark"]) {
+  --surface: #20212de8;
+  --ink: #f0eef7;
+  --subtle: #a6a4b9;
+  --line: #ffffff15;
+  --accent: #a79bff;
+  --wash: #13141e;
+  --color-background: #181924;
+  --color-foreground: #f0eef7;
+  --color-card: #20212d;
+  --color-card-foreground: #f0eef7;
+  --color-primary: #a79bff;
+  --color-primary-foreground: #201a3b;
+  --color-secondary: #333045;
+  --color-secondary-foreground: #c6bcff;
+  --color-muted: #2e2c3d;
+  --color-muted-foreground: #a6a4b9;
+  --color-border: #ffffff18;
+  --color-input: #ffffff25;
+  --color-accent: #353047;
+  --color-accent-foreground: #e2daff;
+  color-scheme: dark;
+}
+.kivora-theme[data-theme="candy"],
+body:has(.kivora-theme[data-theme="candy"]) {
+  --surface: #fff8fbe6;
+  --ink: #482639;
+  --subtle: #79576c;
+  --line: #71365320;
+  --accent: #a03872;
+  --wash: #fcf0f5;
+  --color-primary: #a03872;
+  --color-secondary: #f7e0eb;
+  --color-secondary-foreground: #943564;
+  --color-border: #eed6e3;
+  --color-input: #e6c9d9;
+  --color-foreground: #482639;
+  --color-card-foreground: #482639;
+  --color-accent: #f7e0eb;
+}
+.kivora-theme[data-theme="mint"],
+body:has(.kivora-theme[data-theme="mint"]) {
+  --surface: #fbfffbe8;
+  --ink: #263d33;
+  --subtle: #526d5e;
+  --line: #284b3220;
+  --accent: #216c52;
+  --wash: #edf5ef;
+  --color-primary: #216c52;
+  --color-secondary: #e2eee5;
+  --color-secondary-foreground: #216c52;
+  --color-border: #d7e4da;
+  --color-input: #cbdcd0;
+  --color-foreground: #263d33;
+  --color-card-foreground: #263d33;
+  --color-accent: #e2eee5;
+}
