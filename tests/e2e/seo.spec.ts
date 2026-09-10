@@ -10,7 +10,7 @@ test("sitemap and robots expose the public canonical routes", async ({ request }
   const sitemap = await request.get("/sitemap.xml");
   const xml = await sitemap.text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
-  const paths = ["/", "/docs", "/docs/componentes", ...guides.map(g => `/docs/${g.slug}`), ...components.map(componentHref)];
+  const paths = ["/", "/showcase", "/showcase/chat", "/showcase/incidencias", "/showcase/nave", "/showcase/crm", "/docs", "/docs/componentes", ...guides.map(g => `/docs/${g.slug}`), ...components.map(componentHref)];
   expect(urls.sort()).toEqual(paths.map(absoluteUrl).sort());
   expect(new Set(urls).size).toBe(urls.length);
 });

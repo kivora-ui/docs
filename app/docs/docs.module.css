@@ -1386,7 +1386,7 @@
     font-size: 10px;
   }
   .topNav > a:first-child,
-  .topNav > a:nth-child(3) {
+  .topNav > a[href^="https://www.npmjs.com"] {
     display: none;
   }
   .themePicker {

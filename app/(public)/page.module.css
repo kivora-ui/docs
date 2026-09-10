@@ -1451,3 +1451,11 @@
 
 .headerActions .npmLink:hover { background: var(--line); }
 .headerActions .npmLink svg { width: 25px; height: 11px; }
+
+@media (max-width: 600px) {
+  .header { gap: 12px; }
+  .headerActions { gap: 8px; font-size: 11px; }
+}
+@media (max-width: 400px) {
+  .headerActions .npmLink { display: none; }
+}

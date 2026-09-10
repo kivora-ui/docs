@@ -125,6 +125,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
               aria-label={t("Navegación principal")}
             >
               <Link href="/">{t("Ejemplos")}</Link>
+              <Link href="/showcase">Showcase</Link>
               <Link
                 href="/docs/componentes"
                 aria-current={
@@ -180,6 +181,9 @@ export function DocsShell({ children }: { children: ReactNode }) {
               >
                 <BookOpen size={15} />
                 {t("Bienvenido a Kivora")}
+              </Link>
+              <Link className={styles.overviewLink} href="/showcase" onClick={navigate}>
+                Showcase
               </Link>
               {visibleGuides.length > 0 && (
                 <details open className={styles.navGroup}>
