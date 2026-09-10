@@ -961,19 +961,13 @@ export { components };
 export const groups = [
   ...new Set(components.map((component) => component.group)),
 ];
+// Share category order and alphabetical component order across all docs views.
+components.sort(
+  (a, b) =>
+    groups.indexOf(a.group) - groups.indexOf(b.group) ||
+    a.name.localeCompare(b.name, "en"),
+);
 export const guides = [
-{
-  "slug": "animaciones",
-  "name": "Animaciones",
-  "description": "Entradas, texto, SVG y loaders con movimiento reducido.",
-  "icon": "sparkles"
-},
-{
-  "slug": "agentes",
-  "name": "Uso con agentes",
-  "description": "Instala la skill de Kivora y comparte sus instrucciones con tu agente.",
-  "icon": "terminal"
-},
   {
     slug: "introduccion",
     name: "Introducción",
@@ -1005,6 +999,12 @@ export const guides = [
     icon: "devices",
   },
   {
+    slug: "multiplataforma",
+    name: "Web y React Native",
+    description: "Un lenguaje visual para distintas plataformas.",
+    icon: "devices",
+  },
+  {
     slug: "temas",
     name: "Temas y colores",
     description: "La misma base. Toda tu personalidad.",
@@ -1017,16 +1017,22 @@ export const guides = [
     icon: "layers",
   },
   {
+    slug: "animaciones",
+    name: "Animaciones",
+    description: "Entradas, texto, SVG y loaders con movimiento reducido.",
+    icon: "sparkles",
+  },
+  {
     slug: "accesibilidad",
     name: "Accesibilidad",
     description: "Interfaces que se pueden usar de más formas.",
     icon: "accessibility",
   },
   {
-    slug: "multiplataforma",
-    name: "Web y React Native",
-    description: "Un lenguaje visual para distintas plataformas.",
-    icon: "devices",
+    slug: "agentes",
+    name: "Uso con agentes",
+    description: "Instala la skill de Kivora y comparte sus instrucciones con tu agente.",
+    icon: "terminal",
   },
 ];
 export const componentHref = (component: ComponentDoc) =>
