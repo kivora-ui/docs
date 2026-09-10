@@ -5,15 +5,22 @@ description: Build, configure, and troubleshoot React web and Next.js interfaces
 
 # Kivora UI
 
-Implement the requested interface using the project's installed Kivora version and existing conventions. These references describe @kivora/nextjs 0.2.0; check the installed package's exports and declarations when versions differ.
+Implement the requested interface using the project's installed Kivora version and existing conventions. The website currently installs @kivora/nextjs 0.2.0; the reviewed module checkout declares 0.2.1. Do not treat the checkout as proof of what is published or installed.
 
 ## Workflow
 
 1. Inspect package.json, the lockfile, framework, root styles, and existing providers. Keep the project's package manager and unrelated configuration.
 2. For initial setup or missing styles, read [installation](references/installation.md). For component work, read [components](references/components.md). For colors or dark mode, read [theming](references/theming.md).
+   For DataTable or date selection, read [tables and dates](references/data-and-dates.md). For upload or playback sessions, read [uploads and media](references/uploads-and-media.md). Load only references relevant to the task.
 3. Confirm exports, prop types, and callbacks in the installed package before implementing. Kivora's API is not interchangeable with similarly named shadcn/Radix components.
 4. Compose the requested UI, preserving accessible labels, keyboard operation, and the application's data flow. Use client boundaries for interactive Next.js components; keep server layouts on the server.
 5. Run the project's relevant typecheck/build checks and exercise the changed interaction. Report any unavailable backend or validation that could not be performed.
+
+## Source and version policy
+
+Use the consumer's installed package README, exports, and declarations first. When a module checkout is available, consult its matching version's `packages/nextjs/README.md`, `packages/theme/README.md`, and focused `docs/` guides. Generated `docs/components/*.md` mixes web and native sections: select the correct platform. Design proposals under `docs/superpowers/` are not a published API contract.
+
+These references were reviewed against `kivora-ui/module` commit `377828476a6f1006d638255c0b9613062885010e`. Local checkout paths are optional development resources, not dependencies for consumers. If documentation and installed behavior differ, reproduce the relevant behavior or inspect the installed implementation before applying a newer pattern; do not silently upgrade.
 
 ## Documentation lookup
 

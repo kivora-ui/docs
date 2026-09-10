@@ -57,8 +57,8 @@ export function FrameworkSelect() {
 }
 ```
 
-## Upload and media
+## Specialized workflows
 
-Before implementing uploads, read https://www.kivora.pro/docs-markdown/componentes/file-upload.md. Keep `UploadController` stable and dispose it on unmount. Advanced mode uses Tus, does not accept `createTask`, and starts transfers from its dashboard. `/api/uploads` in examples is a placeholder, not a configured server. Remote sources require Companion and server credentials. Simple mode supports a custom transport.
+For table filters, server-data boundaries, and date confirmation behavior, read [tables and dates](data-and-dates.md). For controller lifetimes, advanced upload state, or persistent playback, read [uploads and media](uploads-and-media.md).
 
-Media players need real sources. Mount `AudioPlayerProvider` in a persistent layout when playback must survive navigation. Check controller/session lifecycle in the component's documentation rather than creating resources on each render.
+QR/barcode generation is local, not scanning. Pass strings to preserve leading zeroes, valid check digits for EAN/UPC, and opaque `#RRGGBB` colors. Preserve the quiet zone. SVG data URLs require `data:` in `img-src` when the application uses CSP. Consult the installed `@kivora/codes` documentation for format limits.

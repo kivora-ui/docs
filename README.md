@@ -58,7 +58,7 @@ To install the local version, omit `--list`. Start an agent session that discove
 ### Maintaining the skill
 
 - Keep `skills/kivora-ui/SKILL.md` concise; put task-specific detail in its linked `references/` files. Those files travel with the installed skill; other repository files do not.
-- Check instructions against the published package README/types and `app/docs/catalog.ts` / `app/docs/content.ts` when updating Kivora. References currently target `@kivora/nextjs` 0.2.0.
+- Check instructions against the published package README/types and `app/docs/catalog.ts` / `app/docs/content.ts` when updating Kivora. The website installs `@kivora/nextjs` 0.2.0; the official module documentation reviewed for the skill declares 0.2.1. Follow the skill’s source/version policy instead of assuming repository changes are already published.
 - Update the website guide and its English translations in `app/_lib/i18n/en.json` when installation or usage changes.
 - Verify local discovery with the command above, run `npm run typecheck` and the documentation translation tests, and try a real consumer task when changing behavioral guidance.
 - Publish by merging the skill folder and documentation into the default branch. No npm release or website deployment is needed for Git-based installation; deploy the website to publish the guide. Installed copies require an explicit update.
@@ -67,3 +67,5 @@ To install the local version, omit `--list`. Start an agent session that discove
 CLI reference: [vercel-labs/skills](https://github.com/vercel-labs/skills).
 
 Production documentation lives at https://www.kivora.pro/docs/agentes. Set `SITE_URL=https://www.kivora.pro` in production (also the default canonical origin). The skill installs from GitHub and reads documentation from this website.
+
+The skill also includes focused table/date and upload/media references, reviewed against `kivora-ui/module` commit `377828476a6f1006d638255c0b9613062885010e`. Consumers do not need a local module checkout.
