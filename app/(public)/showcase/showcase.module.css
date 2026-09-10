@@ -14,6 +14,7 @@
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 28px; }
 .caseCard { display: block; min-width: 0; border-radius: 18px; }
 .preview { aspect-ratio: 8 / 5; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; position: relative; background: #eeedf3; transition: transform .2s; }
+.page[data-theme="dark"] .preview { background: #1c1d28; border-color: #2b2c38; background-clip: padding-box; }
 .caseCard:hover .preview { transform: translateY(-4px); }
 .previewImage { object-fit: cover; }
 .placeholderLabel { position: absolute; top: 53%; left: 16px; right: 16px; text-align: center; color: var(--subtle); font-size: 12px; }
