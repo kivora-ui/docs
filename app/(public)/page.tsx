@@ -1,6 +1,7 @@
 "use client";
 import { useT, LanguagePicker } from "../_lib/i18n/provider";
 
+import { useSiteTheme } from "../_lib/site-theme";
 import Link from "next/link";
 import { useRef, useState, type ReactNode } from "react";
 import {
@@ -591,11 +592,11 @@ const scenes = [Workspace, Analytics, Studio, Commerce];
 export default function MainPage() {
   const t = useT();
   const [active, setActive] = useState(0);
-  const [dark, setDark] = useState(false);
+  const { theme, setTheme } = useSiteTheme();
+  const dark = theme === "dark";
   const [copied, setCopied] = useState(false);
   const touchStart = useRef<number | null>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const theme = dark ? "dark" : examples[active].theme;
   function move(index: number) {
     setActive((index + examples.length) % examples.length);
   }
@@ -656,10 +657,10 @@ export default function MainPage() {
           <LanguagePicker />
           <button
             aria-label={
-              dark ? t("Usar tema del ejemplo") : t("Activar tema oscuro")
+              dark ? t("Activar tema claro") : t("Activar tema oscuro")
             }
             aria-pressed={dark}
-            onClick={() => setDark(!dark)}
+            onClick={() => setTheme(dark ? "light" : "dark")}
           >
             {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>

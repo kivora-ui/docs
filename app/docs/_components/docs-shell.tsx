@@ -4,14 +4,12 @@ import { useT, useLocale, LanguagePicker } from "../../_lib/i18n/provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  createContext,
-  useContext,
   useEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
-import { KivoraProvider } from "@kivora/nextjs";
+import { useSiteTheme, type SiteTheme } from "../../_lib/site-theme";
 import {
   ArrowUpRight,
   BookOpen,
@@ -26,12 +24,8 @@ import { componentHref } from "../catalog";
 import { getDocs } from "../localized";
 import styles from "../docs.module.css";
 
-export type DocsTheme = "light" | "dark" | "candy" | "mint";
-const ThemeContext = createContext<{
-  theme: DocsTheme;
-  setTheme: (theme: DocsTheme) => void;
-}>({ theme: "light", setTheme: () => {} });
-export const useDocsTheme = () => useContext(ThemeContext);
+export type DocsTheme = SiteTheme;
+export const useDocsTheme = useSiteTheme;
 export function ThemePicker() {
   const t = useT();
   const { theme, setTheme } = useDocsTheme();
@@ -70,7 +64,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [theme, setTheme] = useState<DocsTheme>("light");
+  const { theme } = useSiteTheme();
   const search = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -99,8 +93,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
     setQuery("");
   }
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <KivoraProvider colorMode={theme === "dark" ? "dark" : "light"}>
+    <>
         <div className={`kivora-theme ${styles.shell}`} data-theme={theme}>
           <a href="#docs-content" className={styles.skipLink}>
             {t("Saltar al contenido")}
@@ -273,7 +266,6 @@ export function DocsShell({ children }: { children: ReactNode }) {
             </footer>
           </div>
         </div>
-      </KivoraProvider>
-    </ThemeContext.Provider>
+      </>
   );
 }

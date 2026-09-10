@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+import { SiteThemeProvider, type SiteTheme } from "./_lib/site-theme";
 import { getLocale } from "./_lib/i18n/server";
 import { LocaleProvider } from "./_lib/i18n/provider";
 import { translator } from "./_lib/i18n";
@@ -47,6 +49,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = await getLocale();
+  const savedTheme = (await cookies()).get("kivora-theme")?.value;
+  const initialTheme = (["light", "dark", "candy", "mint"].includes(savedTheme ?? "") ? savedTheme : "light") as SiteTheme;
   return (
     <html
       lang={locale}
@@ -57,7 +61,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <link rel="describedby" href="/llms.txt" type="text/markdown" />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <LocaleProvider locale={locale}>{children}</LocaleProvider>
+        <LocaleProvider locale={locale}><SiteThemeProvider initialTheme={initialTheme}>{children}</SiteThemeProvider></LocaleProvider>
       </body>
     </html>
   );

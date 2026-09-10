@@ -849,5 +849,6 @@
   "Cómo funciona @kivora/init": "How @kivora/init works",
   "Instalación manual y compatibilidad de @kivora/native": "Manual installation and compatibility of @kivora/native",
   "Qué compartir entre web y móvil": "What to share between web and mobile",
-  "Identificador del elemento; permite asociar etiquetas y descripciones.": "Element identifier; associates labels and descriptions."
+  "Identificador del elemento; permite asociar etiquetas y descripciones.": "Element identifier; associates labels and descriptions.",
+  "Activar tema claro": "Enable light theme"
 }
