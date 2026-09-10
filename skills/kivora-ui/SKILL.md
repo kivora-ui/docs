@@ -5,13 +5,13 @@ description: Build, configure, and troubleshoot React web and Next.js interfaces
 
 # Kivora UI
 
-Implement the requested interface using the project's installed Kivora version and existing conventions. The website currently installs @kivora/nextjs 0.2.0; the reviewed module checkout declares 0.2.1. Do not treat the checkout as proof of what is published or installed.
+Implement the requested interface using the project's installed Kivora version and existing conventions. The website currently installs @kivora/nextjs 0.3.0; animation exports require 0.3.0 or later. Do not treat the checkout as proof of what is published or installed.
 
 ## Workflow
 
 1. Inspect package.json, the lockfile, framework, root styles, and existing providers. Keep the project's package manager and unrelated configuration.
 2. For initial setup or missing styles, read [installation](references/installation.md). For component work, read [components](references/components.md). For colors or dark mode, read [theming](references/theming.md).
-   For DataTable or date selection, read [tables and dates](references/data-and-dates.md). For upload or playback sessions, read [uploads and media](references/uploads-and-media.md). Load only references relevant to the task.
+   For DataTable or date selection, read [tables and dates](references/data-and-dates.md). For upload or playback sessions, read [uploads and media](references/uploads-and-media.md). For entrances, animated text, SVG drawing, or loading indicators, read [animations](references/animations.md). Load only references relevant to the task.
 3. Confirm exports, prop types, and callbacks in the installed package before implementing. Kivora's API is not interchangeable with similarly named shadcn/Radix components.
 4. Compose the requested UI, preserving accessible labels, keyboard operation, and the application's data flow. Use client boundaries for interactive Next.js components; keep server layouts on the server.
 5. Run the project's relevant typecheck/build checks and exercise the changed interaction. Report any unavailable backend or validation that could not be performed.

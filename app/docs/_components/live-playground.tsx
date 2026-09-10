@@ -49,6 +49,11 @@ const scope = {
   Area,
 };
 const controlNames = [
+  "preset",
+  "split",
+  "duration",
+  "delay",
+  "stagger",
   "variant",
   "size",
   "disabled",

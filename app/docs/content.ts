@@ -8,6 +8,73 @@ export type GuideSection = {
   links?: { label: string; href: string }[];
 };
 export const guideContent: Record<string, GuideSection[]> = {
+ animaciones: [
+  {
+    "id": "instalar",
+    "title": "Disponible desde Kivora 0.3.0",
+    "paragraphs": [
+      "Animation, AnimatedText, AnimatedPath y AnimatedLoader se importan desde @kivora/nextjs. Actualiza el paquete y conserva el CSS y KivoraProvider existentes. No necesitas instalar un motor de animación adicional: el paquete web incluye Motion."
+    ],
+    "code": "npm install @kivora/nextjs@^0.3.0",
+    "label": "Terminal"
+  },
+  {
+    "id": "elegir",
+    "title": "Elige la pieza de animación",
+    "links": [
+      {
+        "label": "Animation",
+        "href": "/docs/componentes/animation"
+      },
+      {
+        "label": "AnimatedText",
+        "href": "/docs/componentes/animated-text"
+      },
+      {
+        "label": "AnimatedPath",
+        "href": "/docs/componentes/animated-path"
+      },
+      {
+        "label": "AnimatedLoader",
+        "href": "/docs/componentes/animated-loader"
+      }
+    ],
+    "paragraphs": [
+      "Animation envuelve contenido; AnimatedText recibe una cadena; AnimatedPath dibuja un trazado; AnimatedLoader representa una carga. Esta familia no incluye salidas, efectos por scroll, morphing ni importación de proyectos de Jitter."
+    ]
+  },
+  {
+    "id": "control",
+    "title": "Tiempos, repetición y estado",
+    "paragraphs": [
+      "duration, delay y stagger se expresan en milisegundos. Las entradas se ejecutan al montar y se repiten cambiando replayKey. AnimatedLoader solo ofrece duration para el tiempo: su bucle termina al desmontarlo o al desactivar el movimiento."
+    ],
+    "code": "\"use client\";\n\nimport { useState } from \"react\";\nimport { Animation, Button, Card, CardContent } from \"@kivora/nextjs\";\n\nexport default function Example() {\n  const [replay, setReplay] = useState(0);\n  return <div style={{ display: \"grid\", gap: 20 }}>\n    <Animation preset=\"fade-up\" duration={600} delay={0} replayKey={replay}>\n      <Card><CardContent style={{ padding: 24 }}>Una entrada suave</CardContent></Card>\n    </Animation>\n    <Button type=\"button\" variant=\"outline\" onClick={() => setReplay(replay + 1)}>Repetir animación</Button>\n  </div>;\n}",
+    "label": "app/animation-example.tsx"
+  },
+  {
+    "id": "accesibilidad",
+    "title": "Movimiento reducido y accesibilidad",
+    "paragraphs": [
+      "Los cuatro componentes respetan prefers-reduced-motion. disabled muestra el estado final sin movimiento; en un loader conserva el indicador. No ocultes información esencial dentro de una animación.",
+      "AnimatedText conserva una frase accesible completa. Usa words para emojis compuestos y ligaduras. AnimatedPath necesita label si aporta información, y AnimatedLoader necesita una etiqueta traducida que describa la operación."
+    ]
+  },
+  {
+    "id": "plataformas",
+    "title": "Web, native y rendimiento",
+    "paragraphs": [
+      "En React Native se importan desde @kivora/native y usan Reanimated. AnimatedPath necesita pathLength; AnimatedText usa textStyle. Consulta los tipos de cada plataforma antes de compartir código.",
+      "El objetivo es 60 fps, no una garantía para todos los dispositivos. Opacity y transform pueden delegarse al navegador; los trazados SVG pueden requerir repintado. Mide tu pantalla real y no extrapoles un benchmark web a dispositivos nativos."
+    ],
+    "links": [
+      {
+        "label": "Documentación oficial de animaciones",
+        "href": "https://github.com/kivora-ui/module/blob/main/docs/animations.md"
+      }
+    ]
+  }
+],
   agentes: [
   {
     "id": "que-incluye",
@@ -88,7 +155,7 @@ export const guideContent: Record<string, GuideSection[]> = {
       title: "Las piezas para tu próxima idea",
       paragraphs: [
         "Kivora es una biblioteca TypeScript de componentes para Next.js y React. Reúne formularios, navegación, tablas, paneles y contenido multimedia bajo un mismo lenguaje visual. Puedes empezar con un botón y componer una aplicación completa con las mismas convenciones.",
-        "El paquete web es @kivora/nextjs. Los ejemplos y las propiedades de esta documentación corresponden a la versión 0.2.0 instalada desde npm.",
+        "El paquete web es @kivora/nextjs. Los ejemplos y las propiedades de esta documentación corresponden a la versión 0.3.0 instalada desde npm.",
       ],
     },
     {
@@ -555,13 +622,22 @@ export const guideContent: Record<string, GuideSection[]> = {
       title: "Qué debes adaptar",
       paragraphs: [
         "Los atributos DOM, los motores de tablas y las opciones de react-slick no son intercambiables con React Native. Resizable pertenece al paquete web; Menu está disponible en ambas plataformas; la biblioteca nativa añade BottomSheet.",
-        "Estas páginas documentan la API de @kivora/nextjs 0.2.0. Consulta el README y los tipos de la versión nativa instalada para construir sus componentes.",
+        "Estas páginas documentan la API de @kivora/nextjs 0.3.0. Consulta el README y los tipos de la versión nativa instalada para construir sus componentes.",
       ],
     },
   ],
 };
 
 export const propDescriptions: Record<string, string> = {
+  duration: "Duración de la animación en milisegundos.",
+  delay: "Espera antes de la entrada, en milisegundos.",
+  stagger: "Separación temporal entre fragmentos de texto, en milisegundos.",
+  replayKey: "Cambia este valor para repetir la animación de entrada.",
+  preset: "Efecto de entrada: fade, fade-up, fade-down o scale.",
+  split: "Divide el texto en palabras o puntos de código Unicode.",
+  d: "Comandos del trazado SVG que se dibujará.",
+  viewBox: "Sistema de coordenadas y límites del SVG.",
+
   children: "Contenido o elementos hijos del componente.",
   className: "Clases CSS adicionales para personalizar el elemento.",
   style: "Estilos en línea de React.",
@@ -571,7 +647,7 @@ export const propDescriptions: Record<string, string> = {
   size: "Tamaño visual del componente.",
   asChild:
     "Aplica las props y el comportamiento al único elemento hijo compatible.",
-  disabled: "Desactiva la interacción del control.",
+  disabled: "Desactiva la interacción del control o el movimiento de la animación.",
   value: "Valor controlado. Actualízalo desde el callback de cambio.",
   defaultValue: "Valor inicial cuando el estado lo gestiona el componente.",
   checked: "Estado de selección controlado.",

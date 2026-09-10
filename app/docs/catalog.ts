@@ -877,11 +877,97 @@ add(
     note: 'Para iniciar audio, llama a play({ id: "track", src: "/audio.mp3", type: "audio", title: "Mi pista" }) con un archivo existente. El provider debe vivir por encima de las páginas que comparten reproducción.',
   },
 );
+add(
+"Animation",
+"Animaciones",
+"Entradas suaves para tarjetas y cualquier contenido.",
+"Elige fade, fade-up, fade-down o scale. duration y delay se expresan en milisegundos. La entrada se ejecuta al montar; cambia replayKey para repetirla. Los estilos se aplican al contenedor exterior y el movimiento al interior.",
+"function Example() {\n  const [replay, setReplay] = useState(0);\n  return <div style={{ display: \"grid\", gap: 20 }}>\n    <Animation preset=\"fade-up\" duration={600} delay={0} replayKey={replay}>\n      <Card><CardContent style={{ padding: 24 }}>Una entrada suave</CardContent></Card>\n    </Animation>\n    <Button type=\"button\" variant=\"outline\" onClick={() => setReplay(replay + 1)}>Repetir animación</Button>\n  </div>;\n}",
+{
+  "stories": [
+    {
+      "name": "Presets de entrada",
+      "code": "<div style={{ display: \"grid\", gap: 16 }}>{([\"fade\", \"fade-up\", \"fade-down\", \"scale\"] as const).map(preset => <Animation key={preset} preset={preset} duration={800}><Badge variant=\"secondary\">{preset}</Badge></Animation>)}</div>"
+    },
+    {
+      "name": "Sin movimiento",
+      "code": "<Animation disabled><Card><CardContent style={{ padding: 24 }}>Contenido visible sin movimiento</CardContent></Card></Animation>"
+    }
+  ],
+  "note": "disabled y la preferencia de movimiento reducido muestran el estado final. Esta API cubre entradas, no salidas ni animaciones por scroll."
+}
+);
+add(
+"AnimatedText",
+"Animaciones",
+"Texto que aparece por palabras o caracteres, con lectura accesible.",
+"children debe ser una cadena. split=\"words\" es el valor predeterminado; stagger define la separación temporal en milisegundos. Usa replayKey para repetir. La frase se expone completa a accesibilidad y los fragmentos visuales se ocultan del lector de pantalla.",
+"function Example() {\n  const [replay, setReplay] = useState(0);\n  return <div style={{ display: \"grid\", gap: 20 }}>\n    <h2><AnimatedText split=\"words\" preset=\"fade-up\" duration={400} stagger={80} replayKey={replay}>Tu próxima idea, en movimiento.</AnimatedText></h2>\n    <Button type=\"button\" variant=\"outline\" onClick={() => setReplay(replay + 1)}>Repetir animación</Button>\n  </div>;\n}",
+{
+  "stories": [
+    {
+      "name": "Por caracteres",
+      "code": "function Example() {\n  const [replay, setReplay] = useState(0);\n  return <div style={{ display: \"grid\", gap: 20 }}>\n    <h2><AnimatedText split=\"characters\" preset=\"fade-up\" duration={400} stagger={40} replayKey={replay}>Tu próxima idea, en movimiento.</AnimatedText></h2>\n    <Button type=\"button\" variant=\"outline\" onClick={() => setReplay(replay + 1)}>Repetir animación</Button>\n  </div>;\n}"
+    },
+    {
+      "name": "Sin movimiento",
+      "code": "<AnimatedText disabled>Contenido visible sin movimiento</AnimatedText>"
+    }
+  ],
+  "note": "La separación por caracteres usa puntos de código Unicode, no grafemas. Para emojis compuestos o escrituras con ligaduras, utiliza words. Conserva el encabezado o párrafo semántico alrededor del componente."
+}
+);
+add(
+"AnimatedPath",
+"Animaciones",
+"Dibuja progresivamente un trazado SVG.",
+"Proporciona d y un viewBox que contenga el trazado. size controla el tamaño del SVG; color y strokeWidth controlan el trazo. Añade label si comunica información; sin label es decorativo. Web calcula la longitud automáticamente.",
+"function Example() {\n  const [replay, setReplay] = useState(0);\n  return <div style={{ display: \"grid\", gap: 20 }}>\n    <AnimatedPath d=\"M5 12 L10 17 L20 7\" label=\"Completado\" size={64} duration={1000} replayKey={replay} />\n    <Button type=\"button\" variant=\"outline\" onClick={() => setReplay(replay + 1)}>Repetir animación</Button>\n  </div>;\n}",
+{
+  "stories": [
+    {
+      "name": "Trazado decorativo",
+      "code": "<AnimatedPath d=\"M2 12 Q12 2 22 12 T42 12\" viewBox=\"0 0 44 24\" size={96} duration={1400} />"
+    },
+    {
+      "name": "Sin movimiento",
+      "code": "<AnimatedPath d=\"M5 12 L10 17 L20 7\" label=\"Completado\" disabled />"
+    }
+  ],
+  "note": "No realiza morphing. En React Native se requiere pathLength con la longitud completa del trazado en unidades SVG; esa propiedad no pertenece a la API web."
+}
+);
+add(
+"AnimatedLoader",
+"Animaciones",
+"Puntos o barras animados mientras una operación está pendiente.",
+"Elige dots o bars y configura duration, size, color y label. Se repite mientras está montado y activo. Renderízalo condicionalmente al estado de carga; disabled detiene el movimiento pero mantiene el indicador visible.",
+"function Example() {\n  const [loading, setLoading] = useState(true);\n  return <div style={{ display: \"grid\", gap: 20 }}>\n    {loading ? <AnimatedLoader variant=\"dots\" duration={700} size={8} label=\"Guardando\" /> : <p role=\"status\">Carga finalizada</p>}\n    <Button type=\"button\" variant=\"outline\" onClick={() => setLoading(!loading)}>{loading ? \"Finalizar carga\" : \"Iniciar carga\"}</Button>\n  </div>;\n}",
+{
+  "stories": [
+    {
+      "name": "Barras",
+      "code": "<AnimatedLoader variant=\"bars\" duration={900} size={10} label=\"Guardando\" />"
+    },
+    {
+      "name": "Sin movimiento",
+      "code": "<AnimatedLoader variant=\"dots\" disabled label=\"Guardando\" />"
+    }
+  ],
+  "note": "Expone role=\"status\" y label como nombre accesible. Traduce label en tu aplicación. No admite delay, stagger ni replayKey; duration se expresa en milisegundos."
+}
+);
 export { components };
 export const groups = [
   ...new Set(components.map((component) => component.group)),
 ];
 export const guides = [
+{
+  "slug": "animaciones",
+  "name": "Animaciones",
+  "description": "Entradas, texto, SVG y loaders con movimiento reducido.",
+  "icon": "sparkles"
+},
 {
   "slug": "agentes",
   "name": "Uso con agentes",

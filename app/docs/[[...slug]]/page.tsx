@@ -483,7 +483,7 @@ async function DocsPageContent({ params }: RouteProps) {
           <section id="api" className={styles.proseSection}>
             <h2>
               {t("Referencia de API")}{" "}
-              <span className={styles.versionBadge}>0.2.0</span>
+              <span className={styles.versionBadge}>0.3.0</span>
             </h2>
             <p>
               {t(
@@ -542,7 +542,7 @@ async function DocsPageContent({ params }: RouteProps) {
           </section>
           <div className={styles.articleSource}>
             <Code2 size={14} />
-            {t("API generada desde @kivora/nextjs 0.2.0")}
+            {t("API generada desde @kivora/nextjs 0.3.0")}
             <a
               href="https://www.npmjs.com/package/@kivora/nextjs"
               target="_blank"

@@ -256,7 +256,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
             </nav>
             <div className={styles.sidebarFoot}>
               <span className={styles.versionDot} /> @kivora/nextjs{" "}
-              <span>0.2.0</span>
+              <span>0.3.0</span>
             </div>
           </aside>
           <div className={styles.document} key={pathname}>

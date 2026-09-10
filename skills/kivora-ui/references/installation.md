@@ -1,6 +1,6 @@
 # Web installation
 
-Based on @kivora/nextjs 0.2.0. React and React DOM 18+ are required; check the installed package's peer dependencies for the version in use.
+Web setup verified with @kivora/nextjs 0.3.0. React and React DOM 18+ are required; check the installed package's peer dependencies for the version in use.
 
 ## Manual setup
 
