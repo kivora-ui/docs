@@ -1,6 +1,6 @@
 # SEO y lectura por agentes
 
-Dominio canónico: **https://kivora.pro**. Puede cambiarse con `SITE_URL` antes de ejecutar `npm run build`. El valor debe ser el origen de producción, sin rutas. No usar la URL temporal de una preview.
+Dominio canónico: **https://www.kivora.pro**. Puede cambiarse con `SITE_URL` antes de ejecutar `npm run build`. El valor debe ser el origen de producción, sin rutas. No usar la URL temporal de una preview.
 
 ## Revisión y cambios
 
@@ -29,9 +29,9 @@ llms.txt es una propuesta de descubrimiento y lectura, no un requisito de Google
 
 En la revisión local del 9 de septiembre de 2026, `curl https://kivora.pro` no pudo resolver el dominio desde este entorno. Por tanto, la validación de producción y del CDN queda pendiente de que el dominio sea accesible y se despliegue esta versión.
 
-Al publicar, configurar DNS y HTTPS, redirigir permanentemente los dominios alternativos a kivora.pro, y comprobar que el CDN/WAF no presenta un desafío o bloqueo a los rastreadores. Mantener previews privadas o con noindex en la infraestructura de despliegue. Estos ajustes no se han aplicado desde este repositorio.
+Al publicar, configurar DNS y HTTPS, redirigir permanentemente los dominios alternativos a www.kivora.pro, y comprobar que el CDN/WAF no presenta un desafío o bloqueo a los rastreadores. Mantener previews privadas o con noindex en la infraestructura de despliegue. Estos ajustes no se han aplicado desde este repositorio.
 
-Después de verificar la propiedad del dominio en Google Search Console y Bing Webmaster Tools, enviar `https://kivora.pro/sitemap.xml`. El sitemap también se anuncia automáticamente en robots.txt. No se han conectado esas cuentas ni enviado datos a servicios externos.
+Después de verificar la propiedad del dominio en Google Search Console y Bing Webmaster Tools, enviar `https://www.kivora.pro/sitemap.xml`. El sitemap también se anuncia automáticamente en robots.txt. No se han conectado esas cuentas ni enviado datos a servicios externos.
 
 Para saber quién visita realmente la web, consultar registros HTTP del hosting/CDN: ruta, fecha, estado y user-agent; buscar accesos a robots.txt, sitemap.xml, llms.txt y docs-markdown. Un user-agent puede falsificarse: contrastar IP/rangos publicados por cada proveedor antes de tratarlo como robot verificado. Analytics basado solo en JavaScript no refleja todas esas visitas.
 

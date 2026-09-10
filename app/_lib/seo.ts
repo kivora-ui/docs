@@ -2,7 +2,7 @@ import { translator } from "./i18n";
 import type { Metadata } from "next";
 
 // Set SITE_URL to the canonical production origin before building.
-const origin = new URL(process.env.SITE_URL || "https://kivora.pro");
+const origin = new URL(process.env.SITE_URL || "https://www.kivora.pro");
 if (!["http:", "https:"].includes(origin.protocol))
   throw new Error("SITE_URL must use HTTP or HTTPS");
 export const siteUrl = origin.origin;

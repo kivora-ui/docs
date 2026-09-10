@@ -34,7 +34,7 @@ test("server renders the preferred language and falls back to English without ch
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      "https://kivora.pro/docs/instalacion-react-native",
+      "https://www.kivora.pro/docs/instalacion-react-native",
     );
     await context.close();
   }
