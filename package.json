@@ -13,9 +13,6 @@
     "test:e2e": "npm run build && playwright test",
     "docs:api": "node scripts/generate-docs-api.mjs",
     "docs:check": "node scripts/check-docs-examples.mjs",
-    "postinstall": "node scripts/patch-kivora-upload.mjs",
-    "predev": "node scripts/patch-kivora-upload.mjs",
-    "prebuild": "node scripts/patch-kivora-upload.mjs",
     "docs:translate": "node scripts/generate-docs-translations.mjs"
   },
   "dependencies": {
@@ -23,7 +20,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@kivora/codes": "^0.1.0",
-    "@kivora/nextjs": "^0.2.0",
+    "@kivora/nextjs": "^0.3.0",
     "@kivora/theme": "^0.1.0",
     "@kivora/upload": "^0.1.0",
     "lucide-react": "^1.41.0",

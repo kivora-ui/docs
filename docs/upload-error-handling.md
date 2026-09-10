@@ -1,5 +1,7 @@
 # Errores del modal de subida
 
+Desde @kivora/nextjs 0.3.0 la distribución incluye esta corrección. Se ha retirado el parche local y sus hooks de instalación/desarrollo/build. Las pruebas de subida siguen cubriendo el comportamiento. El resto de este documento describe el parche histórico de 0.2.0.
+
 La distribución npm @kivora/nextjs 0.2.0 mostraba `String(file.error)` en la tarjeta del archivo. Tus incorpora la respuesta del servidor en ese error; una respuesta HTML 404 producía un mensaje enorme. Uppy añadía además detalles técnicos al informer y escribía errores de transporte gestionados en console.error.
 
 `scripts/patch-kivora-upload.mjs` aplica una corrección local, idempotente y específica para esa versión después de instalar y antes de arrancar desarrollo o compilar. La dependencia sigue viniendo de npm; no se enlaza al repositorio de la biblioteca. Se comprueba que todos los fragmentos esperados coincidan antes de escribir. Al actualizar Kivora hay que revisar el parche y retirarlo cuando la distribución incluya la solución.
