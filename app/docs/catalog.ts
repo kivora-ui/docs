@@ -882,6 +882,12 @@ export const groups = [
   ...new Set(components.map((component) => component.group)),
 ];
 export const guides = [
+{
+  "slug": "agentes",
+  "name": "Uso con agentes",
+  "description": "Instala la skill de Kivora y comparte sus instrucciones con tu agente.",
+  "icon": "terminal"
+},
   {
     slug: "introduccion",
     name: "Introducción",

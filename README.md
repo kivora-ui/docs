@@ -34,3 +34,36 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Kivora agent skill
+
+This repository distributes [`kivora-ui`](skills/kivora-ui/SKILL.md), a skill for building React web and Next.js interfaces with Kivora. It bundles installation, component, and theme references. Installing the skill supplies agent instructions; it does not install the UI library.
+
+Once `skills/kivora-ui` is published on the repository's default branch, users can run from their own project:
+
+```bash
+npx skills add kivora-ui/docs --skill kivora-ui
+```
+
+Choose agents interactively, add `-a codex` or `-a claude-code` to target one, or add `-g` for a global installation. Private repositories require repository access. Discover available skills with `npx skills add kivora-ui/docs --list`; update installed skills with `npx skills update`.
+
+Before publishing, discover the local skill from this checkout without installing it:
+
+```bash
+npx skills add ./skills/kivora-ui --list
+```
+
+To install the local version, omit `--list`. Start an agent session that discovers the skill and ask it to use `kivora-ui` for a concrete Kivora task. Automatic invocation depends on the agent. See the website guide at `/docs/agentes` (English and Spanish), also exposed through `/docs-markdown/agentes.md` and `/llms.txt`.
+
+### Maintaining the skill
+
+- Keep `skills/kivora-ui/SKILL.md` concise; put task-specific detail in its linked `references/` files. Those files travel with the installed skill; other repository files do not.
+- Check instructions against the published package README/types and `app/docs/catalog.ts` / `app/docs/content.ts` when updating Kivora. References currently target `@kivora/nextjs` 0.2.0.
+- Update the website guide and its English translations in `app/_lib/i18n/en.json` when installation or usage changes.
+- Verify local discovery with the command above, run `npm run typecheck` and the documentation translation tests, and try a real consumer task when changing behavioral guidance.
+- Publish by merging the skill folder and documentation into the default branch. No npm release or website deployment is needed for Git-based installation; deploy the website to publish the guide. Installed copies require an explicit update.
+- Add another `skills/<name>/SKILL.md` only for a distinct workflow. Users can select multiple names with `--skill`.
+
+CLI reference: [vercel-labs/skills](https://github.com/vercel-labs/skills).
+
+Production documentation lives at https://www.kivora.pro/docs/agentes. Set `SITE_URL=https://www.kivora.pro` in production (also the default canonical origin). The skill installs from GitHub and reads documentation from this website.

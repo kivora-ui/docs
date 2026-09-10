@@ -8,6 +8,80 @@ export type GuideSection = {
   links?: { label: string; href: string }[];
 };
 export const guideContent: Record<string, GuideSection[]> = {
+  agentes: [
+  {
+    "id": "que-incluye",
+    "title": "Una skill para construir con Kivora",
+    "paragraphs": [
+      "kivora-ui enseña al agente a integrar @kivora/nextjs en React web y Next.js, componer componentes y personalizar temas. Incluye referencias de instalación, APIs y estilos, y enlaza la documentación actual. Para React Native remite a la guía nativa; no aplica las APIs web.",
+      "npx skills ejecuta el instalador de skills. skills add copia las instrucciones al entorno del agente; no instala la biblioteca Kivora ni configura tu aplicación. Para instalar la biblioteca, sigue la guía de instalación o utiliza @kivora/init en un proyecto compatible."
+    ],
+    "links": [
+      {
+        "label": "Instalar la biblioteca",
+        "href": "/docs/instalacion"
+      }
+    ]
+  },
+  {
+    "id": "instalar",
+    "title": "Instala la skill en tu proyecto",
+    "paragraphs": [
+      "Necesitas Node.js con npm/npx y acceso al repositorio. Ejecuta el comando desde la raíz de tu proyecto. El instalador permite elegir los agentes de destino; la instalación por proyecto es la opción predeterminada.",
+      "El comando remoto estará disponible cuando la carpeta skills/kivora-ui esté publicada en la rama predeterminada de kivora-ui/docs. Si el repositorio es privado, necesitas credenciales con acceso."
+    ],
+    "code": "npx skills add kivora-ui/docs --skill kivora-ui",
+    "label": "Terminal"
+  },
+  {
+    "id": "opciones",
+    "title": "Elegir agentes y alcance",
+    "code": "npx skills add kivora-ui/docs --list\nnpx skills add kivora-ui/docs --skill kivora-ui -a codex\nnpx skills add kivora-ui/docs --skill kivora-ui -a claude-code\nnpx skills add kivora-ui/docs --skill kivora-ui -g",
+    "label": "Terminal",
+    "paragraphs": [
+      "Cada línea es una alternativa: listar sin instalar, instalar para un agente concreto o instalar globalmente para tus proyectos. Usa --skill con varios nombres si el repositorio incorpora más skills; actualmente distribuimos kivora-ui."
+    ]
+  },
+  {
+    "id": "usar",
+    "title": "Pide una tarea concreta",
+    "paragraphs": [
+      "Después de instalar, inicia una sesión del agente que pueda descubrir la skill. Pídele: «Usa la skill kivora-ui para crear un formulario de proyecto con validación y los componentes de Kivora». La selección automática depende del agente y de la tarea; también puedes invocarla explícitamente con el mecanismo de tu herramienta.",
+      "La skill orienta las decisiones y consulta los tipos de la versión instalada. No garantiza que el agente la utilice en todas las peticiones. Revisa los cambios y comprueba los flujos de tu aplicación."
+    ]
+  },
+  {
+    "id": "actualizar",
+    "title": "Actualizar y probar desde el repositorio",
+    "code": "npx skills list\nnpx skills update\nnpx skills add ./skills/kivora-ui --list\nnpx skills add ./skills/kivora-ui",
+    "label": "Terminal",
+    "paragraphs": [
+      "skills update actualiza las skills instaladas. Los dos comandos con ruta local se ejecutan desde el checkout de kivora-ui/docs y permiten descubrir o instalar esta skill antes de publicarla. Publicar cambios en GitHub no actualiza automáticamente las copias instaladas."
+    ]
+  },
+  {
+    "id": "recursos",
+    "title": "Recursos para usuarios y agentes",
+    "links": [
+      {
+        "label": "Código fuente de la skill",
+        "href": "https://github.com/kivora-ui/docs/tree/main/skills/kivora-ui"
+      },
+      {
+        "label": "Referencia del instalador de skills",
+        "href": "https://github.com/vercel-labs/skills"
+      },
+      {
+        "label": "Índice de documentación para agentes",
+        "href": "/llms.txt"
+      },
+      {
+        "label": "Documentación completa en texto",
+        "href": "/llms-full.txt"
+      }
+    ]
+  }
+],
   introduccion: [
     {
       id: "que-es-kivora",

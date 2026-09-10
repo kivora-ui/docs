@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kivora UI"
+  short_description: "Build React and Next.js interfaces with Kivora"
+  default_prompt: "Use $kivora-ui to build the requested interface with Kivora and verify its integration."
